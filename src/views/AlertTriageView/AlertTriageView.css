@@ -1,0 +1,218 @@
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+/* Botones */
+.button {
+  background-color: #005a3a;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0, 74, 47, 0.1);
+}
+
+.button-secondary {
+  background-color: #f0f0f0;
+  color: #444;
+  padding: 10px 18px; /* Ajuste del monolito */
+  box-shadow: none;
+}
+
+/* Pestañas */
+.tabContainer {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tabButton {
+  padding: 10px 15px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: #777;
+  transition: all 0.2s;
+}
+
+.tabButton.active {
+  color: #005a3a;
+  border-bottom: 3px solid #005a3a;
+}
+
+/* Lista */
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.listItemContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.alertDetails {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.alertFarmName {
+  font-weight: bold;
+  font-size: 18px;
+}
+.alertDate {
+  color: #555;
+}
+.alertDetails p {
+  margin: 0;
+}
+
+.listItemActions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Formulario */
+.photoGallery {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+.photoThumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: #eee;
+}
+.photoCaption {
+  text-align: center;
+  font-size: 12px;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.label {
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.textarea {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  min-height: 100px;
+  margin-bottom: 15px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #ffffff;
+}
+
+.buttonToggleGroup {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+.buttonToggleGroup .button {
+  flex-shrink: 0;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+}
+
+.select {
+  width: 100%;
+  padding: 12px 40px 12px 15px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+  margin-bottom: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23555' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px 16px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  background-color: #ffffff;
+}
+
+.dateInputContainer {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.dateInput {
+  padding-right: 40px;
+}
+
+.dateInputIcon {
+  position: absolute;
+  top: 13px;
+  right: 15px;
+  pointer-events: none;
+  color: #555;
+}

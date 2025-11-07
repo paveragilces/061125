@@ -1,0 +1,329 @@
+/* En: src/views/ProducerAlertList.css */
+/* --- ARCHIVO CSS COMPLETO CON VISOR DE FOTOS --- */
+
+/* Contenedor principal de la página */
+.producer-alert-list-page .container {
+  /* ... */
+}
+
+.producer-alert-list-page .h1 {
+  /* ... */
+}
+
+/* --- Header --- */
+.producer-alert-list-page .alertListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.producer-alert-list-page .alertListHeader .h1 {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* --- Pestañas --- */
+.producer-alert-list-page .tabContainer {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.producer-alert-list-page .tabButton {
+  padding: 10px 15px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: #777;
+  transition: all 0.2s;
+}
+
+.producer-alert-list-page .tabButton.active {
+  color: #005a3a;
+  border-bottom: 3px solid #005a3a;
+}
+
+/* --- NUEVO DISEÑO DE TARJETA DE ALERTA --- */
+
+/* Contenedor de la lista */
+.producer-alert-list-page .alertListContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 20px;
+}
+
+.producer-alert-list-page .alertCard {
+  background-color: #ffffff;
+  border: 1px solid #eef0f2;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; 
+}
+
+.producer-alert-list-page .alertCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #fcfcfc;
+  border-bottom: 1px solid #eef0f2;
+}
+
+.producer-alert-list-page .alertCardTitle {
+  display: flex;
+  flex-direction: column;
+}
+
+.producer-alert-list-page .alertFarmName {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #005a3a;
+}
+
+.producer-alert-list-page .alertLote {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.producer-alert-list-page .alertCardBody {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-grow: 1; 
+}
+
+.producer-alert-list-page .alertCardSection {
+  border-left: 3px solid #eef0f2;
+  padding-left: 15px;
+}
+.producer-alert-list-page .alertCardSection.assigned {
+  border-color: #f0ad4e; /* Amarillo */
+}
+.producer-alert-list-page .alertCardSection.completed {
+  border-color: #5cb85c; /* Verde */
+}
+
+
+.producer-alert-list-page .sectionTitle {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #777;
+  text-transform: uppercase;
+  margin: 0 0 5px 0;
+}
+
+.producer-alert-list-page .sectionContent {
+  font-size: 0.95rem;
+  margin: 2px 0;
+}
+.producer-alert-list-page .symptoms {
+  font-style: italic;
+  color: #333;
+}
+.producer-alert-list-page .specialties {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.producer-alert-list-page .manager-comment {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: #777;
+  padding-top: 4px;
+}
+.producer-alert-list-page .manager-comment strong {
+  color: #555;
+}
+
+.producer-alert-list-page .diagnosis {
+  font-weight: 600;
+  color: #005a3a;
+}
+.producer-alert-list-page .actions {
+  font-weight: 600;
+  color: #d9534f;
+}
+
+/* --- CAMBIO 1: .photoChip ahora es un botón --- */
+.producer-alert-list-page .photoChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f0f0f0;
+  color: #444;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-top: 5px;
+  /* Estilos de botón */
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.producer-alert-list-page .photoChip:hover {
+  background-color: #e0e0e0;
+  border-color: #ccc;
+  color: #005a3a;
+}
+
+
+.producer-alert-list-page .alertCardFooter {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fdfdfd;
+  border-top: 1px solid #eef0f2;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.producer-alert-list-page .alertCardFooterActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.producer-alert-list-page .alertPdfButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid #ccc;
+  color: #555;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.producer-alert-list-page .alertPdfButton:hover {
+  background-color: #eef0f2;
+  border-color: #aaa;
+  color: #005a3a;
+}
+
+
+.producer-alert-list-page .alertPriority {
+  font-weight: 600;
+  font-size: 13px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.producer-alert-list-page .alertPriority.priority-low {
+  background-color: #e6f7ff;
+  color: #5bc0de;
+}
+.producer-alert-list-page .alertPriority.priority-medium {
+  background-color: #fffaf5;
+  color: #f0ad4e;
+}
+.producer-alert-list-page .alertPriority.priority-high {
+  background-color: #fff8f8;
+  color: #d9534f;
+}
+
+
+/* --- Tags de Estado --- */
+.producer-alert-list-page .tag {
+  padding: 5px 12px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.producer-alert-list-page .tag-pending {
+  background-color: #fffaf5;
+  color: #f0ad4e;
+  border: 1px solid #f0ad4e;
+}
+.producer-alert-list-page .tag-completed {
+  background-color: #f0f9f5;
+  color: #5cb85c;
+  border: 1px solid #5cb85c;
+}
+.producer-alert-list-page .tag-assigned {
+  background-color: #f0f7ff;
+  color: #4A90E2;
+  border: 1px solid #4A90E2;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.producer-alert-list-page .tag-assigned.urgency-high {
+  background-color: #fff8f8;
+  color: #d9534f;
+  border-color: #d9534f;
+}
+.producer-alert-list-page .tag-assigned.urgency-medium {
+  background-color: #fffaf5;
+  color: #f0ad4e;
+  border-color: #f0ad4e;
+}
+
+
+/* Botones (para el botón de "Reportar Nueva") */
+.producer-alert-list-page .button {
+  background-color: #005a3a;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0, 74, 47, 0.1);
+}
+
+/* --- CAMBIO 2: Estilos para la galería del Modal --- */
+
+.photoModalGallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+.photoModalItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.photoModalItem img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.photoModalLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  padding: 0 10px 10px 10px;
+  text-align: center;
+}

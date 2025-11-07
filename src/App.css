@@ -1,0 +1,267 @@
+/* * =======================================================
+ * App.css - Estilos Globales y Layout Principal (Corregido)
+ * =======================================================
+ */
+
+/* --- Estilos Base (¡LA FUENTE!) --- */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  /* ¡ESTA ES LA LÍNEA QUE FALTABA! */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f7f9fa; /* Fondo gris ultra claro */
+  min-height: 100vh;
+  color: #333;
+  line-height: 1.6;
+  box-sizing: border-box; 
+}
+
+/* Asegura que todos los elementos hereden el box-sizing */
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* --- Layout Principal --- */
+
+/* Layout para páginas públicas (Login, Visitor) */
+.mainContentFull {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* * ¡AQUÍ ESTÁ LA CORRECCIÓN!
+ * Usamos 'margin-left' para el Sidebar y 'padding-top' para el Header.
+ * El 'padding' interno se aplica por separado.
+ */
+.mainContentWithSidebar {
+  /* 1. Offset para el Sidebar fijo */
+  margin-left: 260px; 
+  /* 2. Offset para el Header fijo */
+  padding-top: 70px;  
+  
+  /* 3. Padding interno para el área de contenido */
+  padding-left: 30px;
+  padding-right: 30px; 
+  padding-bottom: 30px;
+
+  /* 4. Sizing */
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: #f7f9fa; 
+  /* width: auto; (ya no es necesario 'width: 100%') */
+}
+
+/* --- Contenedor Genérico --- */
+/* * Este es el contenedor blanco principal que se usa en 
+ * casi todas las vistas (Dashboard, Formularios, etc.)
+ */
+.container {
+  background-color: #ffffff;
+  padding: 25px 30px;
+  border-radius: 16px; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); 
+  margin-bottom: 20px;
+  border: 1px solid #eef0f2; 
+}
+
+/* --- Estilos Globales de Tipografía --- */
+.h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1A202C; /* Negro suave */
+  margin-bottom: 25px;
+  border-bottom: 2px solid #a6e34b; 
+  padding-bottom: 10px;
+}
+
+.h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #2D3748; /* Gris oscuro */
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eef0f2;
+  padding-bottom: 10px;
+}
+
+.h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #4A5568;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* --- Estilos Globales de Formularios --- */
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4A5568;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+  color: #2D3748;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box; 
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #005a3a;
+  box-shadow: 0 0 0 2px rgba(0, 90, 58, 0.1);
+}
+
+.select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23718096' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px 16px;
+}
+
+.select:disabled {
+  background-color: #f7f9fa;
+  cursor: not-allowed;
+}
+
+/* --- Estilos Globales de Botones --- */
+.button,
+.btn-primary,
+.button-secondary,
+.button-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid transparent; 
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background-color: #005a3a; 
+  color: white;
+  border-color: #005a3a;
+  box-shadow: 0 2px 5px rgba(0, 74, 47, 0.1);
+}
+
+.btn-primary:hover {
+  background-color: #004d31;
+  border-color: #004d31;
+}
+
+.btn-primary:disabled {
+  background-color: #a0a0a0;
+  border-color: #a0a0a0;
+  color: #f0f0f0;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.button-secondary {
+  background-color: #f0f0f0;
+  color: #444;
+  border-color: #e0e0e0;
+}
+
+.button-secondary:hover {
+  background-color: #e6e6e6;
+  border-color: #d0d0d0;
+}
+
+.button-danger {
+  background-color: #d9534f;
+  color: white;
+  border-color: #d9534f;
+}
+
+.button-danger:hover {
+  background-color: #c9302c;
+  border-color: #c9302c;
+}
+
+/* --- Clases de Tags (Estado) --- */
+.tag {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.tag-pending {
+  background-color: #fffaf5;
+  color: #f0ad4e;
+}
+
+.tag-approved,
+.tag-completed {
+  background-color: #f0f9f5;
+  color: #5cb85c;
+}
+
+.tag-danger,
+.tag-denied,
+.tag-rejected {
+  background-color: #fff8f8;
+  color: #d9534f;
+}
+
+.tag-info {
+  background-color: #f7f9fa;
+  color: #4A5568;
+}
+
+/* --- Añadir al final de App.css --- */
+
+.training-modal-content p {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 0;
+  margin-bottom: 20px;
+  max-width: 80ch; /* Limita el ancho del texto */
+}
+
+/* --- Contenedor responsive para el video --- */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* Proporción 16:9 */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  background: #000;
+  border-radius: 8px; /* Redondea las esquinas del video */
+}
+
+.video-container .youtube-iframe,
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,86 @@
+/* src/views/VisitorApprovalList/VisitorApprovalList.css */
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+/* * Los estilos de .tableContainer, .dataTable, .riskTag, etc.
+ * fueron eliminados. Ahora los manejan los componentes
+ * reutilizables <Table> y <RiskTag>.
+ */
+
+/* --- Célula de Acción --- */
+.actionCell {
+  white-space: nowrap; 
+  width: 1%;
+}
+
+/* --- Estilo base para botones (copiado de ProducerVisitorLog.css) --- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  color: #555;
+  box-shadow: none;
+}
+.button:hover {
+  background-color: #f7f9fa;
+  border-color: #ccc;
+  color: #333;
+}
+
+/* --- ¡NUEVOS BOTONES DE ÍCONO! --- */
+
+/* Botón base de ícono */
+.button.icon {
+  padding: 0;
+  width: 36px; /* Más pequeño que el de limpiar */
+  height: 36px;
+  border-radius: 50%; /* Redondo */
+  margin: 0 5px; /* Espacio entre botones */
+}
+
+/* Botón de Aprobar (Verde) */
+.approveButton.button.icon {
+  border-color: #5cb85c;
+  color: #5cb85c;
+}
+.approveButton.button.icon:hover {
+  background-color: #f0f9f5; /* Fondo verde claro */
+  border-color: #4a994a;
+  color: #4a994a;
+  transform: scale(1.1);
+}
+
+/* Botón de Rechazar (Rojo) */
+.rejectButton.button.icon {
+  border-color: #d9534f;
+  color: #d9534f;
+}
+.rejectButton.button.icon:hover {
+  background-color: #fff8f8; /* Fondo rojo claro */
+  border-color: #c9302c;
+  color: #c9302c;
+  transform: scale(1.1);
+}

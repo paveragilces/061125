@@ -1,0 +1,42 @@
+/* En: src/components/ui/FileUploadButton.css */
+/* --- ARCHIVO COMPLETO CON ESTADO 'LOADED' --- */
+
+.fileUploadButton {
+  /* Usamos los estilos de .button-secondary de tu App.css */
+  background-color: #f0f0f0;
+  color: #444;
+  padding: 10px 18px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: none;
+  width: 100%; /* Ocupa el espacio disponible */
+  justify-content: center;
+}
+
+.fileUploadButton:hover {
+  background-color: #e6e6e6;
+  border-color: #d0d0d0;
+}
+
+/* --- NUEVO ESTADO: Cuando la foto está cargada --- */
+.fileUploadButton.loaded {
+  background-color: #e6fffb; /* Verde pálido */
+  border-color: #5cb85c;
+  color: #005a3a;
+}
+
+.fileUploadButton.loaded:hover {
+  background-color: #d1f7eb;
+}
+
+/* Ajuste del icono dentro del botón */
+.fileUploadButton svg {
+  flex-shrink: 0;
+}

@@ -1,0 +1,41 @@
+/* En: src/views/FincaRegistration/FincaRegistration.css */
+/* --- ARCHIVO LIMPIO Y MODIFICADO --- */
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.formDivider {
+  border: none;
+  border-top: 1px solid #eef0f2;
+  margin: 30px 0;
+}
+.submitButton {
+  grid-column: span 2;
+  justify-self: center;
+  padding: 12px 30px;
+  font-size: 16px;
+}
+
+/* Estilo para el feedback del mapa */
+.location-feedback {
+  background-color: #e6fffb;
+  border: 1px solid #b3f0e6;
+  color: #005249;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-top: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}

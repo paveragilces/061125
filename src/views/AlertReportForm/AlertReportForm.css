@@ -1,0 +1,172 @@
+/* En: src/views/AlertReportForm/AlertReportForm.css */
+/* --- ARCHIVO COMPLETO Y REDISEÑADO CON STEPPER --- */
+
+/* --- CAMBIO: Prefijo .alert-report-form para evitar conflictos --- */
+
+.alert-report-form .h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+.alert-report-form .h2 {
+  font-size: 22px;
+  color: #222;
+  margin-bottom: 20px;
+  font-weight: 600;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+.alert-report-form .formGroup {
+  margin-bottom: 25px;
+}
+
+.alert-report-form .label {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --- NUEVO: Estilo para los pasos --- */
+.alert-report-form .formStep {
+  padding-top: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animación simple de fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.alert-report-form .checkboxGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 10px;
+  background-color: #f7f9fa;
+  border: 1px solid #eef0f2;
+  border-radius: 8px;
+  padding: 15px;
+}
+.alert-report-form .checkboxGrid.symptoms {
+  max-height: 250px; /* Un poco más de altura */
+  overflow-y: auto;
+}
+.alert-report-form .checkboxItem {
+  display: flex;
+  align-items: center;
+  padding: 8px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.alert-report-form .checkboxItem:hover {
+  background-color: #eef0f2;
+}
+.alert-report-form .checkboxLabel {
+  font-weight: normal;
+  font-size: 15px;
+  color: #333;
+  line-height: 1.4;
+}
+.alert-report-form .checkboxInput {
+  margin-right: 10px;
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* Fotos */
+.alert-report-form .photoUploadGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+.alert-report-form .photoPreview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 10px;
+  border: 2px solid #ddd;
+}
+
+/* Ubicación */
+.alert-report-form .locationFeedback {
+  margin-top: 15px;
+  color: #005a3a;
+  font-weight: 600;
+  background-color: #e6fffb;
+  border: 1px solid #b3f0e6;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.alert-report-form .formDivider {
+  border: none;
+  border-top: 1px solid #f0f0f0;
+  margin: 20px 0;
+}
+
+.alert-report-form .formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .alert-report-form .formGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.alert-report-form .select {
+  width: 100%;
+  padding: 12px 40px 12px 15px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+  margin-bottom: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23555' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+  cursor: pointer;
+}
+.alert-report-form .select:focus {
+  border-color: #005a3a;
+  box-shadow: 0 0 0 3px rgba(0,90,58,0.1);
+}
+.alert-report-form .select:disabled {
+  background-color: #f7f7f7;
+  color: #999;
+}
+
+.alert-report-form .textMuted {
+  color: #777;
+  font-style: italic;
+}
+
+/* --- NUEVOS ESTILOS PARA LA NAVEGACIÓN DEL STEPPER --- */
+.alert-report-form .formActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Estilo para los botones (asumiendo que .button es global) */
+.alert-report-form .button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}

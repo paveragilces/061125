@@ -1,0 +1,251 @@
+/* En: src/views/ProducerDashboard.css */
+/* --- ARCHIVO COMPLETO CON ARREGLO DE CSS Y ACORDEÓN --- */
+
+/* --- CAMBIO 1: Prefijo .producer-dashboard-page añadido a todo --- */
+
+.producer-dashboard-page .container {
+  /* ... */
+}
+
+.producer-dashboard-page .h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+.producer-dashboard-page .h2 {
+  font-size: 22px;
+  color: #222;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.producer-dashboard-page .dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.producer-dashboard-page .card {
+  background-color: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.producer-dashboard-page .cardTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #005a3a;
+  margin-bottom: 10px;
+  /* --- CAMBIO 2: Espacio para el icono --- */
+  display: flex; 
+  align-items: center;
+  gap: 8px;
+}
+
+.producer-dashboard-page .cardNumericValue {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.producer-dashboard-page .listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Este es el estilo en conflicto */
+  padding: 15px 20px;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.producer-dashboard-page .listItemContent {
+  flex: 1;
+  display: flex;
+  /* Este estilo es específico del dashboard y está bien aquí */
+  flex-direction: column; 
+  align-items: flex-start;
+  gap: 5px;
+}
+.producer-dashboard-page .listItemContent p {
+  margin: 2px 0;
+}
+
+.producer-dashboard-page .listItemActions {
+  display: flex;
+  flex-direction: column; /* Específico del dashboard */
+  align-items: flex-end; /* Específico del dashboard */
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.producer-dashboard-page .listItemTitle {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.producer-dashboard-page .countdownTimer {
+  font-size: 18px;
+  font-weight: bold;
+  color: #005a3a;
+  transition: color 0.3s ease;
+}
+.producer-dashboard-page .countdownDate {
+  color: #555;
+}
+
+/* Resultados */
+.producer-dashboard-page .resultItem {
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #fdfdfd;
+}
+.producer-dashboard-page .resultHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.producer-dashboard-page .resultItem p {
+  margin: 4px 0;
+}
+.producer-dashboard-page .diagnosis {
+  font-weight: bold;
+  color: #005a3a;
+}
+.producer-dashboard-page .actions {
+  font-weight: bold;
+  color: #d9534f;
+}
+.producer-dashboard-page .recommendation {
+  font-style: italic;
+}
+
+.producer-dashboard-page .tag {
+  padding: 5px 12px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.producer-dashboard-page .tag-completed { 
+  background-color: #5cb85c; 
+  color: #fff; 
+}
+
+/* --- Estilos de Urgencia (Próximas Visitas) --- */
+.producer-dashboard-page .listItem.urgency-high {
+  background-color: #fff8f8;
+  border-color: #d9534f;
+}
+.producer-dashboard-page .countdownTimer.urgency-high {
+  color: #d9534f;
+}
+.producer-dashboard-page .listItem.urgency-medium {
+  background-color: #fffaf5;
+  border-color: #f0ad4e;
+}
+.producer-dashboard-page .countdownTimer.urgency-medium {
+  color: #f0ad4e;
+}
+.producer-dashboard-page .listItem.urgency-low {
+  /* ... */
+}
+
+
+/* --- Filtro de Finca (Sin cambios) --- */
+.producer-dashboard-page .fincaFilterContainer {
+  margin-bottom: 25px;
+}
+.producer-dashboard-page .label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #555;
+}
+.producer-dashboard-page .fincaFilterGroup {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 10px;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  padding: 5px;
+  max-width: fit-content; 
+}
+.producer-dashboard-page .fincaFilterButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 9px;
+  background-color: transparent; 
+  color: #4A5568;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.producer-dashboard-page .fincaFilterButton:hover:not(.active) {
+  background-color: #e0e0e0;
+}
+.producer-dashboard-page .fincaFilterButton.active {
+  background-color: #005a3a; 
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 90, 58, 0.2);
+  transform: scale(1.02);
+}
+
+/* --- CAMBIO 3: NUEVOS ESTILOS PARA EL ACORDEÓN --- */
+
+.producer-dashboard-page .completedTasksHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20px;
+  border-radius: 8px;
+  padding-bottom: 10px;
+  transition: background-color 0.2s;
+}
+.producer-dashboard-page .completedTasksHeader:hover {
+  background-color: #f9f9f9;
+}
+
+.producer-dashboard-page .completedTasksHeader .h2 {
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.producer-dashboard-page .toggleIcon {
+  color: #555;
+  transition: transform 0.3s ease;
+}
+.producer-dashboard-page .toggleIcon.expanded {
+  transform: rotate(180deg);
+}
+
+.producer-dashboard-page .completedTasksContainer {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, opacity 0.3s ease-out, margin-top 0.4s ease-out;
+}
+
+.producer-dashboard-page .completedTasksContainer.expanded {
+  max-height: 1000px; /* Altura máxima (ajustar si es necesario) */
+  opacity: 1;
+  margin-top: 15px; /* Espacio entre el header y la lista */
+  transition: max-height 0.4s ease-in, opacity 0.3s ease-in, margin-top 0.4s ease-in;
+}

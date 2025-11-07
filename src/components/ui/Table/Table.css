@@ -1,0 +1,73 @@
+/* src/components/ui/Table/Table.css */
+.tableContainer {
+  width: 100%;
+  overflow-x: auto; /* Permite scroll horizontal en pantallas pequeñas */
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  border: 1px solid #e0e0e0; /* Borde gris sutil */
+}
+
+.customTable {
+  width: 100%;
+  border-collapse: separate; /* Para border-radius en thead/tbody */
+  border-spacing: 0;
+}
+
+.customTable thead th {
+  background-color: #fff; /* ¡CAMBIADO! Fondo blanco */
+  color: #333; /* ¡CAMBIADO! Texto oscuro */
+  padding: 15px 20px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 14px;
+  border-bottom: 2px solid #e0e0e0; /* ¡CAMBIADO! Borde gris */
+  white-space: nowrap; /* Evita que el texto del encabezado se rompa */
+}
+
+/* Bordes redondeados para el thead (ajustado para que no se vea el borde) */
+.customTable thead tr:first-child th:first-child {
+  border-top-left-radius: 12px;
+}
+.customTable thead tr:first-child th:last-child {
+  border-top-right-radius: 12px;
+}
+
+.customTable tbody td {
+  padding: 12px 20px;
+  border-bottom: 1px solid #eee; /* Separador entre filas */
+  color: #444;
+  font-size: 14px;
+  vertical-align: middle; /* Centra el contenido verticalmente */
+}
+
+.customTable tbody tr:last-child td {
+  border-bottom: none; /* No hay línea en la última fila */
+}
+
+.customTable tbody tr:hover {
+  background-color: #f9f9f9; /* Resaltado gris muy claro */
+}
+
+/* Clases para alinear columnas específicas */
+.customTable th.text-center, .customTable td.text-center {
+  text-align: center;
+}
+.customTable th.text-right, .customTable td.text-right {
+  text-align: right;
+}
+
+.emptyTableMessage {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-style: italic;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+/* Estilos para el campo de entrada de filtro dentro de la tabla */
+/* (Estos estilos se movieron a ProducerVisitorLog.css 
+   para ser más específicos de ese componente) */

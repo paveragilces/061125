@@ -1,0 +1,234 @@
+/* src/views/ProducerVisitorLog/ProducerVisitorLog.css */
+.producerVisitorLog {
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.producerVisitorLog .h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 25px;
+  border-bottom: 3px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+/* --- CONTENEDOR DE FILTROS --- */
+.filtersContainer {
+  background-color: #FAFAFA;
+  border: 1px solid #eef0f2;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column; /* Apila las filas */
+  gap: 0; /* Sin espacio entre filas por defecto */
+}
+
+/* --- ¡AQUÍ ESTÁ EL ARREGLO PRINCIPAL (Layout)! --- */
+.filtersRow {
+  display: grid; 
+  gap: 15px 20px;
+  align-items: flex-end; 
+}
+
+/* Fila principal */
+.filtersRow.primary {
+  /* 3 columnas flexibles + 1 columna auto para botones */
+  grid-template-columns: 1fr 1fr 1fr auto; 
+}
+
+/* Fila avanzada (colapsada) */
+.filtersRow.advanced {
+  grid-template-columns: 1fr 1fr 1fr 1fr; /* 4 columnas iguales */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-top: 0;
+  padding-top: 0;
+  transition: max-height 0.3s ease-out, opacity 0.2s ease-in, margin-top 0.3s ease-out, padding-top 0.3s ease-out;
+}
+
+/* Fila avanzada (expandida) */
+.filtersRow.advanced.expanded {
+  max-height: 200px; /* Altura suficiente */
+  opacity: 1;
+  padding-top: 16px; 
+  margin-top: 16px;
+  border-top: 1px solid #eef0f2;
+}
+
+
+/* Contenedor de un solo filtro (label + input) */
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px; 
+}
+
+.filterGroup label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* Estilo unificado para inputs y selects de filtro */
+.filterInput,
+.filterSelect {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 40px; 
+}
+.filterInput::placeholder {
+  color: #aaa;
+}
+
+.filterInput:focus,
+.filterSelect:focus {
+  outline: none;
+  border-color: #005a3a;
+  box-shadow: 0 0 0 3px rgba(0, 90, 58, 0.1);
+}
+
+.filterSelect {
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.2-16%208.4-3.7%205.2-4.5%2011.8-2.5%2017.5l139%20139.2c2.8%202.8%206.7%204.3%2010.6%204.3s7.8-1.5%2010.6-4.3l139-139.2c2-5.7%201.1-12.3-2.6-17.5z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px;
+  padding-right: 35px; /* Espacio para la flecha */
+  cursor: pointer;
+}
+
+/* --- Botones de Acción de Filtro --- */
+.filterGroup.actionButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  white-space: nowrap; 
+  /* 'margin-left: auto' ya no es necesario con Grid */
+}
+
+/* Estilo base para los botones de filtro */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  color: #555;
+  box-shadow: none;
+}
+.button:hover {
+  background-color: #f7f9fa;
+  border-color: #ccc;
+  color: #333;
+}
+
+/* Botón "Filtros Avanzados" (usa la base .button) */
+.button.button-secondary-outline {
+  /* Hereda la mayoría de los estilos de .button */
+}
+
+/* --- ¡AQUÍ ESTÁ EL ARREGLO DEL BOTÓN "X"! --- */
+.clearFiltersButton.button.icon {
+  color: #A0AEC0; /* Gris claro */
+  padding: 0;
+  width: 40px; /* Ancho fijo */
+  border-radius: 50%; /* ¡Redondo! */
+}
+.clearFiltersButton.button.icon:hover {
+  background-color: #fff8f8; /* Fondo rojo suave */
+  border-color: #ffebee;
+  color: #d9534f; /* Rojo */
+  transform: rotate(90deg); /* Efecto de giro sutil */
+}
+
+/* --- ESTILOS DE ESTADO (PÍLDORAS) --- */
+.visitStatusTag {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.visitStatusTag.pending {
+  background-color: #fff8e1;
+  color: #ffb300;
+}
+.visitStatusTag.approved {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+.visitStatusTag.denied {
+  background-color: #ffebee;
+  color: #f44336;
+}
+.visitStatusTag.checked_in {
+  background-color: #e3f2fd;
+  color: #2196f3;
+}
+.visitStatusTag.checked_out {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+/* --- BOTÓN DE PDF (ICONO) --- */
+.pdfButton {
+  background: none;
+  border: none;
+  padding: 5px;
+  box-shadow: none; 
+  border-radius: 50%; 
+  width: 34px; 
+  height: 34px;
+  transition: all 0.2s ease;
+  color: #ccc; /* Deshabilitado por defecto */
+}
+.pdfButton:disabled {
+  cursor: not-allowed;
+}
+
+/* Habilitado */
+.pdfButton.enabled {
+  color: #005a3a; /* Icono verde */
+  cursor: pointer;
+}
+.pdfButton.enabled:hover {
+  color: #005a3a; 
+  background-color: #f0f9f5; /* Fondo verde claro */
+  transform: scale(1.1); 
+}
+
+/* Botón Icon (base) - Usado por el componente Button de /ui */
+.button.icon {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 5px;
+}
+.button.icon:hover:not(:disabled) {
+  background-color: #f0f0f0;
+  transform: translateY(0); 
+}
+.button.icon:disabled {
+  background: none;
+  color: #ccc;
+}

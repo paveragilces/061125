@@ -1,0 +1,77 @@
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 90%;
+}
+
+.modalContent.large {
+  width: 600px;
+}
+
+.modalTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.modalTitle.success { color: #5cb85c; }
+.modalTitle.error { color: #d9534f; }
+.modalTitle.info { color: #005a3a; }
+
+.modalBody {
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.modalBody.left {
+  text-align: left;
+}
+
+.modalActions {
+  text-align: center;
+  margin-top: 25px;
+}
+
+/* Estilo copiado de 'styles.button' para que el modal sea autocontenido */
+.modalButton {
+  background-color: #005a3a;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0, 74, 47, 0.1);
+}
+
+.modalButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 90, 58, 0.2);
+  background-color: #006a44;
+}

@@ -1,0 +1,76 @@
+/* src/components/ui/global-styles.module.css */
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.inputGroup label {
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  background-color: #ffffff;
+}
+
+.inputField:focus {
+  border-color: #005a3a;
+  box-shadow: 0 0 0 3px rgba(0, 90, 58, 0.1);
+}
+
+.btn {
+  background-color: #005a3a;
+  color: white;
+  padding: 12px 20px;
+  border: 1.5px solid #005a3a;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0, 74, 47, 0.1);
+}
+
+.btn:hover {
+  background-color: #004a2f;
+  border-color: #004a2f;
+  transform: translateY(-2px);
+}
+
+.btn:disabled {
+  background-color: #aaa;
+  border-color: #aaa;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.btnSecondary {
+  background-color: #f0f0f0;
+  color: #444;
+  border-color: #f0f0f0;
+  box-shadow: none;
+}
+
+.btnSecondary:hover {
+  background-color: #e0e0e0;
+  border-color: #e0e0e0;
+  color: #333;
+}

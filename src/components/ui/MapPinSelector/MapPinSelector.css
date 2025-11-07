@@ -1,0 +1,103 @@
+.mapPinContainer {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  background-color: #f7f9fa;
+  overflow: hidden; /* Importante para los bordes redondeados del mapa */
+}
+
+/* Contenedor del mapa Leaflet */
+.leaflet-container {
+  height: 350px;
+  width: 100%;
+  z-index: 1;
+}
+
+/* Pin Fijo en el Centro */
+.mapPinCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* Centra el pin (mitad de altura - 350px/2, más la mitad del pin 48px/2) */
+  transform: translate(-50%, -50%);
+  margin-top: -24px; /* Ajuste fino para la punta del pin */
+  z-index: 2;
+  pointer-events: none; /* El pin no se puede clickear, el mapa sí */
+}
+
+.mapInstructions {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 3;
+}
+.mapInstructions p {
+  margin: 0;
+}
+
+.mapPinContainer .button {
+  width: 100%;
+  border-radius: 0 0 12px 12px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  z-index: 2; /* Asegura que esté sobre el mapa */
+  position: relative; /* Complementa el z-index */
+}
+
+.locationFeedback {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.locationFeedback.success {
+  color: #005a3a;
+}
+.locationFeedback.error {
+  color: #d9534f;
+  background-color: #fff8f8;
+}
+.locationFeedback p {
+  margin: 4px 0 10px 0;
+  font-size: 15px;
+}
+.locationFeedback .button-secondary {
+  padding: 6px 12px;
+  font-size: 14px;
+  height: auto;
+  border-radius: 8px; /* Restaura el borde */
+}
+
+/* Estilos de botones (copiados de FincaRegistration.css) */
+.button {
+  background-color: #005a3a;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0, 74, 47, 0.1);
+}
+
+.button-secondary {
+  background-color: #f0f0f0;
+  color: #444;
+  padding: 10px 18px;
+  box-shadow: none;
+}

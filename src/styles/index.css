@@ -1,0 +1,95 @@
+/* Estilos Globales de la Aplicación */
+
+/* Animación de Carga */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Estilos de Foco Globales */
+input:focus, select:focus, textarea:focus {
+  border-color: #005a3a;
+  box-shadow: 0 0 0 3px rgba(0, 90, 58, 0.1);
+}
+
+/* --- Resets de Inputs Específicos --- */
+
+/* Ocultar ícono de calendario en inputs de fecha (para poder usar el nuestro) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+input[type="date"] {
+  -webkit-appearance: none;
+}
+input[type="date"]::-ms-clear, input[type="date"]::-ms-reveal {
+  display: none;
+}
+
+/* Estilos de Slider (Range) */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+}
+input[type=range]:hover {
+  opacity: 1;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #005a3a;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+input[type=range]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #005a3a;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* --- Efectos Hover Globales --- */
+/* Estos se aplican a las clases de botón base */
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 90, 58, 0.2);
+  background-color: #006a44;
+}
+.button-secondary:hover {
+  transform: translateY(-2px);
+  background-color: #e6e6e6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+.button-success:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 4px 12px rgba(92, 184, 92, 0.2);
+}
+.button-danger:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 4px 12px rgba(217, 83, 79, 0.2);
+}
+.btn-outline:hover {
+  background-color: #fdfdfd;
+  border-color: #005a3a;
+  color: #005a3a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+}
+.card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.07);
+}

@@ -1,0 +1,76 @@
+/* Estilos para el Perfil del Técnico */
+
+.profileInfoCard {
+  background-color: #f7f9fa;
+  border: 1px solid #eef0f2;
+  border-radius: 12px;
+  padding: 20px 25px;
+  margin-bottom: 30px;
+}
+
+.profileInfoCard .h2 {
+  margin-top: 0;
+  border: none;
+  padding-bottom: 0;
+}
+
+.profileInfoCard p {
+  font-size: 16px;
+  color: #4A5568;
+  margin: 5px 0;
+}
+
+.specialtyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.checkboxItem {
+  display: flex;
+  align-items: center;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #2D3748;
+  background-color: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 15px;
+  width: 100%;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.checkboxLabel:hover {
+  background-color: #f7f9fa;
+}
+
+.checkboxInput {
+  width: 1.15em;
+  height: 1.15em;
+  margin-right: 12px;
+  cursor: pointer;
+  accent-color: #005a3a;
+}
+
+.checkboxLabel input:checked {
+  /* ... */
+}
+
+.checkboxLabel:has(input:checked) {
+  background-color: #f0f9f5;
+  border-color: #005a3a;
+  font-weight: 600;
+}
+
+
+.formDivider {
+  border: none;
+  border-top: 1px solid #eef0f2;
+  margin: 30px 0;
+}

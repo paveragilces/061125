@@ -1,0 +1,25 @@
+.emptyStateContainer {
+  text-align: center;
+  padding: 40px;
+  background-color: #f7f9fa;
+  border-radius: 12px;
+  border: 1px dashed #e0e0e0;
+}
+
+.emptyStateIcon {
+  color: #005a3a;
+  opacity: 0.6;
+}
+
+.emptyStateTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #005a3a;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.emptyStateMessage {
+  font-size: 16px;
+  color: #555;
+}

@@ -1,0 +1,89 @@
+/* En: src/components/ui/InspectionStepper.css */
+/* --- ARCHIVO CSS COMPLETAMENTE REDISEÑADO --- */
+
+.stepperContainer {
+  display: flex;
+  align-items: flex-start; /* Alinea los items al inicio */
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.stepperStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 1 auto; /* Permite que el paso ocupe su espacio */
+  position: relative;
+  text-align: center;
+}
+
+.stepIconContainer {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid #e0e0e0; /* Borde pendiente por defecto */
+  background-color: #f7f9fa;
+  transition: all 0.3s ease;
+  z-index: 2; /* Se asegura que el icono esté sobre la línea */
+}
+
+.stepName {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #a0a0a0; /* Pendiente por defecto */
+  transition: color 0.3s ease;
+  max-width: 80px; /* Evita que nombres largos rompan el layout */
+}
+
+/* --- Estado: Completado --- */
+.stepperStep.completed .stepIconContainer {
+  background-color: #005a3a; /* Verde corporativo */
+  border-color: #005a3a;
+  color: white;
+}
+.stepperStep.completed .stepName {
+  color: #333; /* Texto oscuro para pasos completados */
+}
+
+/* --- Estado: Actual --- */
+.stepperStep.current .stepIconContainer {
+  background-color: #ffffff;
+  border-color: #005a3a;
+  color: #005a3a;
+  transform: scale(1.1);
+  box-shadow: 0 0 0 4px rgba(0, 90, 58, 0.1);
+  /* Animación de pulso */
+  animation: pulse 1.5s infinite ease-in-out;
+}
+.stepperStep.current .stepName {
+  color: #005a3a; /* Verde para el texto actual */
+  font-weight: 700;
+}
+
+/* --- Línea Conectora --- */
+.stepperLine {
+  flex: 1;
+  height: 4px;
+  background-color: #e0e0e0; /* Línea pendiente */
+  margin-top: 21px; /* Centra la línea (40px / 2) + 1px */
+  transition: background-color 0.4s ease;
+  z-index: 1;
+}
+.stepperLine.completed {
+  background-color: #005a3a; /* Línea completada */
+}
+
+/* Animación de pulso para el paso actual */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0px rgba(0, 90, 58, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(0, 90, 58, 0);
+  }
+}

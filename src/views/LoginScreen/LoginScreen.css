@@ -1,0 +1,180 @@
+/* --- 1. ESTILOS BASE DE LA PANTALLA --- */
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #f7f9fa;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.loginBox {
+  background-color: white;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  text-align: center;
+  width: 420px;
+  max-width: 100%;
+}
+
+.loginLogo {
+  font-size: 42px;
+  font-weight: bold;
+  color: var(--color-primary-dark);
+  margin-bottom: 16px;
+}
+
+.loginLogoSub {
+  color: var(--color-primary-light);
+  font-weight: 500;
+}
+
+/* El panel que contiene los botones (se muestra 1 a la vez) */
+.loginViewPanel {
+  width: 100%;
+}
+
+.loginTitle {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 4px;
+}
+
+.loginSubtitle {
+  font-size: 16px;
+  color: #4a5568;
+  margin-bottom: 24px;
+  min-height: 24px; /* Evita que el texto "salte" */
+}
+
+
+/* --- 2. BOTONES Y LISTAS --- */
+
+/* Botón "Volver" */
+.loginBackButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #4a5568;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 12px;
+  float: left; /* Lo alinea a la izquierda */
+  padding: 4px;
+  border-radius: 6px;
+}
+.loginBackButton:hover {
+  color: #005a3a;
+  background-color: #f7f9fa;
+}
+
+
+/* --- ESTILO "TARJETA" (NUEVO) ---
+   Usado solo para la VISTA PRINCIPAL 
+*/
+.loginCardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columnas */
+  gap: 16px;
+  width: 100%;
+  clear: both; /* Limpia el float del botón "Volver" (aunque no esté) */
+}
+
+.loginSelectCard {
+  display: flex;
+  flex-direction: column; /* Icono arriba, texto abajo */
+  align-items: center;
+  justify-content: center;
+  
+  width: 100%;
+  height: 140px;
+  padding: 20px 10px;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  background-color: #f9fafb;
+  
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a202c;
+  text-align: center;
+  
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.loginSelectCard:hover {
+  border-color: var(--color-primary-dark);
+  background-color: #f0f9f5;
+  color: var(--color-primary-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 90, 58, 0.1);
+}
+
+.loginSelectCard .icon-svg {
+  color: var(--color-primary);
+  width: 36px;
+  height: 36px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+.loginSelectCard:hover .icon-svg {
+  color: var(--color-primary-dark);
+}
+
+
+/* --- ESTILO "LISTA" (EXISTENTE) ---
+   Usado para las VISTAS INTERNAS 
+*/
+.loginButtonList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  clear: both;
+}
+
+.loginSelectButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  
+  width: 100%;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background-color: #f9fafb;
+  
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a202c;
+  text-align: left;
+  
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.loginSelectButton:hover {
+  border-color: var(--color-primary-dark);
+  background-color: #f0f9f5;
+  color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 90, 58, 0.08);
+}
+
+.loginSelectButton .icon-svg {
+  color: var(--color-primary);
+  transition: all 0.2s ease-in-out;
+}
+
+.loginSelectButton:hover .icon-svg {
+  color: var(--color-primary-dark);
+}

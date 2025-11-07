@@ -1,0 +1,233 @@
+/* src/views/VisitorAccess/VisitorAccess.css */
+
+/* Contenedores principales (reutiliza estilos de Login) */
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.visitorBox {
+  background-color: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  text-align: center;
+  width: 600px;
+  max-width: 95%;
+}
+
+.loginLogo {
+  font-size: 42px;
+  font-weight: bold;
+  color: #005a3a;
+  line-height: 1.2;
+}
+
+.loginLogoSub {
+  font-size: 42px;
+  font-weight: bold;
+  color: #a6e34b;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.loginTitle {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+/* Estilos de Pestañas */
+.tabContainer {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tabButton {
+  padding: 10px 15px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: #777;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tabButton:hover {
+  background-color: #f9f9f9;
+}
+
+.tabButton.active {
+  color: #005a3a;
+  border-bottom: 3px solid #005a3a;
+}
+
+.tabContent {
+  text-align: left;
+}
+
+/* Formulario */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Estilos para Inputs y Selects */
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px; /* Reducido */
+  width: 100%;
+}
+
+.inputGroup label {
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  text-align: left;
+}
+
+.inputField {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  background-color: #ffffff;
+  /* Apariencia para el select */
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23555' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px 16px;
+}
+
+.inputField:focus {
+  border-color: #005a3a;
+  box-shadow: 0 0 0 3px rgba(0, 90, 58, 0.1);
+}
+/* No aplicar la flecha a inputs que no sean select */
+.inputField[type="text"],
+.inputField[type="datetime-local"] {
+  background-image: none;
+}
+
+
+.messageBox {
+  text-align: center;
+  padding: 20px;
+  background-color: #f8fff8;
+  border: 1px solid #5cb85c;
+  border-radius: 8px;
+  color: #333;
+}
+
+/* Estilos de Pases QR */
+.visitList {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.visitCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  border-left: 5px solid #5cb85c; /* Borde verde por defecto */
+}
+
+.visitDetails h3 {
+  margin-top: 0;
+  color: #005a3a;
+}
+.visitDetails p {
+  margin: 5px 0;
+}
+
+.riskTag {
+  font-weight: bold;
+}
+.riskTag.low { color: #5cb85c; }
+.riskTag.middle { color: #f0ad4e; }
+.riskTag.high { color: #d9534f; }
+
+.status {
+  font-weight: 500;
+}
+.statusApproved {
+  color: #5cb85c;
+  font-weight: bold;
+  margin-left: 8px;
+}
+.statusIn {
+  color: #005a3a;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+/* QR Code */
+.qrCodeContainer {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.qrCodeBox {
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+}
+.qrScanInstruction, .qrNote {
+  font-size: 12px;
+  color: #555;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* --- ¡ESTILOS NUEVOS AÑADIDOS! --- */
+
+.statusDenied {
+  color: #d9534f; /* Rojo */
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.visitCardDenied {
+  border-left-color: #d9534f;
+  background-color: #fff8f8;
+}
+
+.deniedMessage {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #d9534f;
+  background-color: #ffebee;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+}

@@ -1,0 +1,55 @@
+/* src/components/ui/RiskTag/RiskTag.css */
+.riskTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap; /* Evita que el texto se rompa */
+}
+
+.riskCircle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 6px;
+  display: inline-block;
+  flex-shrink: 0; /* Evita que el círculo se encoja */
+}
+
+.riskTag.low {
+  background-color: #e6ffe6; /* Fondo verde claro */
+  color: #008000; /* Texto verde oscuro */
+}
+.riskTag.low .riskCircle {
+  background-color: #008000;
+}
+
+.riskTag.middle {
+  background-color: #fffacd; /* Fondo amarillo claro */
+  color: #ffa500; /* Texto naranja */
+}
+.riskTag.middle .riskCircle {
+  background-color: #ffa500;
+}
+
+.riskTag.high {
+  background-color: #ffe6e6; /* Fondo rojo claro */
+  color: #ff0000; /* Texto rojo oscuro */
+}
+.riskTag.high .riskCircle {
+  background-color: #ff0000;
+}
+
+.riskTag.unknown {
+  background-color: #f0f0f0;
+  color: #666;
+}
+.riskTag.unknown .riskCircle {
+  background-color: #ccc;
+}
+
+.riskLabel {
+  line-height: 1; /* Asegura que el texto se alinee bien */
+}

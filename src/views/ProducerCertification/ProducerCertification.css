@@ -1,0 +1,298 @@
+/* En: src/views/ProducerCertification/ProducerCertification.css */
+/* --- ARCHIVO COMPLETO CON HEADER FUSIONADO --- */
+
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+.h2 {
+  font-size: 22px;
+  color: #222;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* --- CAMBIO 1: Nuevo contenedor principal --- */
+.certificationContainer {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  border: 1px solid;
+  transition: box-shadow 0.2s ease-in-out;
+}
+.certificationContainer:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+.certificationContainer.certified {
+  border-color: #5cb85c;
+}
+.certificationContainer.pending {
+  border-color: #f0ad4e;
+}
+
+/* Modificamos el header para que no tenga borde inferior */
+.certificationHeader {
+  display: flex;
+  align-items: stretch;
+}
+.certificationHeader.certified {
+  background-color: #f0f9f5;
+}
+.certificationHeader.pending {
+  background-color: #fffaf5;
+}
+/* ... (El resto de .certificationBadge, .certificationSummary, .certificationScoreBox no cambia) ... */
+.certificationBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 30px;
+}
+.certificationHeader.certified .certificationBadge {
+  background-color: #5cb85c;
+  color: white;
+}
+.certificationHeader.pending .certificationBadge {
+  background-color: #f0ad4e;
+  color: white;
+}
+.certificationSummary {
+  flex: 1;
+  padding: 20px 25px;
+}
+.summaryTitle {
+  font-size: 20px;
+  font-weight: 700;
+}
+.certificationHeader.certified .summaryTitle {
+  color: #005a3a;
+}
+.certificationHeader.pending .summaryTitle {
+  color: #f0ad4e;
+}
+.certificationSummary p {
+  font-size: 15px;
+  color: #4A5568;
+  margin: 5px 0 0 0;
+}
+.certificationScoreBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 20px 30px;
+  border-left: 1px solid #eef0f2;
+}
+.scoreLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #718096;
+}
+.scoreValue {
+  font-size: 36px;
+  font-weight: 700;
+  color: #005a3a;
+  line-height: 1.2;
+}
+
+/* --- CAMBIO 3: Nuevo botón "Ver Desglose" para el header --- */
+.headerCta {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 15px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #005a3a;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.headerCta:hover {
+  text-decoration: underline;
+}
+
+/* --- CAMBIO 2: Eliminada la sección estática .certificationBreakdown --- */
+
+.progressGrid {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columnas */
+  gap: 15px 25px;
+}
+
+/* --- Historial de Revisiones (Sin cambios) --- */
+.certificationHistory {
+  margin-top: 30px;
+}
+.certificationHistory .h2 {
+  border-bottom: 1px solid #eef0f2;
+}
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.historyItemContainer {
+  background-color: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+.historyItemContainer:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+.historyItem {
+  background: none;
+  border: none;
+  width: 100%;
+  font-family: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  text-align: left;
+  cursor: pointer;
+}
+.historyItemContainer:hover .historyItem {
+  background-color: #f7f9fa;
+}
+.historyItemContainer:hover .historyCta {
+  color: #005a3a;
+}
+.historyInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.historyDate {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2D3748;
+}
+.historyScore {
+  font-size: 14px;
+  color: #4A5568;
+}
+.historyActions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.historyCta {
+  font-size: 14px;
+  font-weight: 600;
+  color: #718096;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+}
+.historyCtaIcon {
+  transform: rotate(-90deg);
+  transition: transform 0.3s ease;
+}
+.historyCtaIcon.expanded {
+  transform: rotate(0deg);
+}
+
+/* --- CAMBIO 4: Nuevo desglose para el header (animación smooth) --- */
+.currentBreakdown {
+  background-color: #fdfdfd; /* Fondo blanco para el desglose */
+  overflow: hidden;
+  max-height: 0; 
+  opacity: 0;
+  padding: 0 25px; 
+  margin-top: 0;
+  border-top: none;
+  transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.4s ease-out, margin-top 0.4s ease-out;
+}
+.currentBreakdown.expanded {
+  max-height: 500px; 
+  opacity: 1;
+  padding: 20px 25px 25px 25px; 
+  border-top: 1px solid #eef0f2;
+  margin-top: -1px;
+  transition: max-height 0.4s ease-in, opacity 0.3s ease-in, padding 0.4s ease-in;
+}
+.currentBreakdown .progressGrid {
+  margin-top: 0; /* Quitamos el margen superior */
+}
+
+
+.historyBreakdown {
+  background-color: #fbfdfe; 
+  overflow: hidden;
+  max-height: 0; 
+  opacity: 0;
+  padding: 0 25px; 
+  margin-top: 0;
+  border-top: none;
+  transition: max-height 0.4s ease-out, opacity 0.3s ease-out, padding 0.4s ease-out, margin-top 0.4s ease-out;
+}
+.historyBreakdown.expanded {
+  max-height: 500px; 
+  opacity: 1;
+  padding: 20px 25px 25px 25px; 
+  border-top: 1px solid #f0f0f0;
+  margin-top: -1px;
+  transition: max-height 0.4s ease-in, opacity 0.3s ease-in, padding 0.4s ease-in;
+}
+.historyBreakdown .progressGrid {
+  margin-top: 20px;
+  gap: 10px 20px;
+}
+.tag {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tag-aprobado {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+.tag-no-aprobado {
+  background-color: #ffebee;
+  color: #f44336;
+}
+.historyModalContent .h2 {
+  margin-top: 0;
+  color: #005a3a;
+  border: none;
+  padding: 0;
+}
+.historyModalContent .progressGrid {
+  grid-template-columns: 1fr;
+}
+@media (max-width: 768px) {
+  .progressGrid {
+    grid-template-columns: 1fr;
+  }
+  .certificationHeader {
+    flex-direction: column;
+  }
+  .certificationScoreBox {
+    border-left: none;
+    border-top: 1px solid #eef0f2;
+    align-items: flex-start;
+    padding: 15px 25px;
+  }
+}

@@ -1,0 +1,44 @@
+/* En: src/components/ui/ProgressBar/ProgressBar.css */
+/* --- ARCHIVO COMPLETO Y MEJORADO --- */
+
+.progressBarContainer {
+  width: 100%;
+}
+
+.progressBarLabel {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* --- NUEVO: Contenedor para alinear barra y texto --- */
+.progressBarWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progressBarTrack {
+  flex: 1; /* Hace que la barra ocupe el espacio disponible */
+  height: 16px;
+  background-color: #eef0f2;
+  border-radius: 8px;
+  overflow: hidden; /* Asegura que la barra interna respete el radio */
+}
+
+.progressBarFill {
+  height: 100%;
+  border-radius: 8px;
+  /* Animación suave cuando la barra crece */
+  transition: width 0.5s ease-in-out, background-color 0.5s ease;
+}
+
+/* --- NUEVO: Estilo para el texto del porcentaje --- */
+.progressBarPercentage {
+  font-size: 1.1rem;
+  font-weight: 700;
+  min-width: 50px; /* Asegura espacio para "100%" */
+  text-align: right;
+}
