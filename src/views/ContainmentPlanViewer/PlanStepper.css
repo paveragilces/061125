@@ -1,120 +1,315 @@
-/* En: src/views/ContainmentPlanViewer/PlanStepper.css */
-
 .stepper-container {
-  width: 100%;
-  max-width: 900px; /* Limita el ancho para mejor legibilidad */
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Espacio entre los pasos */
+  gap: 18px;
 }
 
 .step-item {
-  background-color: #ffffff;
-  border: 1px solid #eef0f2;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  transition: all 0.3s ease;
-  overflow: hidden; /* Para que el borde coloreado funcione bien */
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  background: linear-gradient(135deg, #ffffff, #f8fbff);
+  box-shadow: 0 16px 32px rgba(37, 56, 88, 0.08);
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-/* --- ESTADO DEL PASO --- */
-.step-item.status-completed {
-  border-left: 5px solid #38A169; /* Verde */
-}
 .step-item.status-active {
-  border-left: 5px solid #3182CE; /* Azul */
-  box-shadow: 0 4px 12px rgba(49, 130, 206, 0.1);
-}
-.step-item.status-pending {
-  border-left: 5px solid #E2E8F0; /* Gris */
+  box-shadow: 0 22px 40px rgba(49, 130, 206, 0.18);
+  transform: translateY(-2px);
+  border-color: rgba(49, 130, 206, 0.25);
 }
 
-/* --- CABECERA DEL PASO --- */
+.step-item.status-completed {
+  border-color: rgba(56, 161, 105, 0.25);
+}
+
 .step-header {
-  padding: 20px 25px;
-  cursor: pointer;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 24px 28px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
   transition: background-color 0.2s ease;
 }
-.step-item.status-completed .step-header {
-  background-color: #f8fdf8;
-}
-.step-item.status-active .step-header {
-  background-color: #f4f9ff;
-}
-.step-header:hover {
-  background-color: #fcfcfc;
+
+.step-header:focus-visible {
+  outline: 2px solid rgba(49, 130, 206, 0.6);
+  outline-offset: 2px;
 }
 
-.step-header-title .h3 {
-  margin: 0;
-  font-size: 1.25rem;
-  color: #2D3748;
+.step-item.status-completed .step-header {
+  background: linear-gradient(135deg, rgba(240, 255, 244, 0.9), rgba(224, 255, 237, 0.7));
 }
-.step-item.status-completed .step-header-title .h3 {
-  color: #718096;
+
+.step-item.status-active .step-header {
+  background: linear-gradient(135deg, rgba(235, 248, 255, 0.95), rgba(219, 234, 254, 0.8));
+}
+
+.step-header:hover {
+  background: rgba(226, 232, 240, 0.4);
+}
+
+.step-header-title {
+  display: grid;
+  gap: 10px;
+}
+
+.step-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.step-title-row .h3 {
+  margin: 0;
+  color: #1a202c;
+  font-size: 1.2rem;
+}
+
+.step-item.status-completed .step-title-row .h3 {
+  color: #2f855a;
   text-decoration: line-through;
 }
-.step-item.status-active .step-header-title .h3 {
-  color: #2C5282;
+
+.step-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.step-header-title .step-progress-text {
+.step-status-chip.tone-active {
+  background: rgba(49, 130, 206, 0.15);
+  color: #2c5282;
+}
+
+.step-status-chip.tone-completed {
+  background: rgba(56, 161, 105, 0.18);
+  color: #2f855a;
+}
+
+.step-status-chip.tone-pending {
+  background: rgba(226, 232, 240, 0.8);
+  color: #4a5568;
+}
+
+.step-progress-text {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #718096;
-  margin-top: 5px;
+  color: #4a5568;
 }
-.step-item.status-active .step-header-title .step-progress-text {
-  color: #3182CE;
+
+.step-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.step-progress-bar {
+  width: 120px;
+  height: 8px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  overflow: hidden;
+}
+
+.step-progress-bar-inner {
+  height: 100%;
+  background: linear-gradient(90deg, #63b3ed, #4299e1);
+  transition: width 0.3s ease;
+}
+
+.step-item.status-completed .step-progress-bar-inner {
+  background: linear-gradient(90deg, #68d391, #48bb78);
 }
 
 .step-header-toggle {
-  color: #718096;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.08);
+  color: #1a202c;
   transition: transform 0.3s ease;
 }
+
+.step-item.status-active .step-header-toggle {
+  background: rgba(49, 130, 206, 0.15);
+  color: #2c5282;
+}
+
 .step-header-toggle.open {
   transform: rotate(180deg);
 }
 
-/* Barra de progreso en la cabecera */
-.step-progress-bar {
-  width: 100px;
-  height: 8px;
-  background-color: #E2E8F0;
-  border-radius: 4px;
-  overflow: hidden;
-}
-.step-progress-bar-inner {
-  height: 100%;
-  background-color: #38A169; /* Verde */
-  transition: width 0.3s ease;
-}
-.step-item.status-active .step-progress-bar-inner {
-  background-color: #3182CE; /* Azul */
-}
-
-
-/* --- CONTENIDO DEL PASO (TAREAS) --- */
 .step-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-  background-color: #ffffff;
+  transition: max-height 0.35s ease, padding 0.3s ease;
+  background: #ffffff;
 }
 
 .step-content.open {
-  max-height: 1000px; /* Valor grande para permitir la expansión */
-  border-top: 1px solid #eef0f2;
-  transition: max-height 0.5s ease-in;
+  max-height: 1000px;
+  padding: 0 28px 24px;
+  border-top: 1px solid #edf2f7;
 }
 
 .step-tasks-list {
   display: flex;
   flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.timeline-card {
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
-  padding: 25px;
+  align-items: flex-start;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.timeline-card:focus-visible {
+  outline: 2px solid rgba(29, 78, 216, 0.65);
+  outline-offset: 3px;
+}
+
+.timeline-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+}
+
+.timeline-card.in_progress {
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 16px 32px rgba(59, 130, 246, 0.14);
+}
+
+.timeline-card.completed {
+  border-color: rgba(56, 161, 105, 0.3);
+  background: linear-gradient(135deg, rgba(240, 255, 244, 0.75), #ffffff);
+}
+
+.timeline-card-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.timeline-task-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #1a202c;
+}
+
+.timeline-task-status.tone-pending {
+  background: rgba(226, 232, 240, 0.8);
+  color: #4a5568;
+}
+
+.timeline-task-status.tone-in-progress {
+  background: rgba(191, 219, 254, 0.85);
+  color: #1d4ed8;
+}
+
+.timeline-task-status.tone-completed {
+  background: rgba(198, 246, 213, 0.85);
+  color: #2f855a;
+}
+
+.timeline-card-flags {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #2d3748;
+}
+
+.card-text {
+  margin: 0;
+  font-size: 1rem;
+  color: #1a202c;
+  line-height: 1.5;
+}
+
+.timeline-card-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.85rem;
+}
+
+.timeline-note {
+  color: #4a5568;
+}
+
+.timeline-note.muted {
+  color: #a0aec0;
+}
+
+.timeline-open-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.timeline-open-label svg {
+  transform: rotate(-90deg);
+}
+
+@media (max-width: 720px) {
+  .step-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .step-header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .timeline-card {
+    padding: 16px;
+  }
+
+  .timeline-card-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

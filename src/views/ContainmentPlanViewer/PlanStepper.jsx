@@ -1,15 +1,15 @@
 // En: src/views/ContainmentPlanViewer/PlanStepper.jsx
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Step from './Step';
 import './PlanStepper.css';
 
 // Función para determinar el estado de un paso
 const getStepStatus = (step, isFirstIncompleteStep) => {
-  const totalTasks = step.tasks.length;
-  if (totalTasks === 0) return 'completed'; // Un paso sin tareas se considera completo
+  const tasks = step.tasks || [];
+  const totalTasks = tasks.length;
+  if (totalTasks === 0) return 'completed';
 
-  const completedTasks = step.tasks.filter(t => t.status === 'completed').length;
-  
+  const completedTasks = tasks.filter((task) => task.status === 'completed').length;
   if (completedTasks === totalTasks) {
     return 'completed';
   }
@@ -20,34 +20,40 @@ const getStepStatus = (step, isFirstIncompleteStep) => {
 };
 
 const PlanStepper = ({ plan, onOpenTaskDetails }) => {
-  // Encontrar el índice del primer paso que NO esté 100% completado
+  const steps = plan.steps || [];
+
   const firstIncompleteStepIndex = useMemo(() => {
-    return plan.steps.findIndex(step => {
-      const total = step.tasks.length;
-      const completed = step.tasks.filter(t => t.status === 'completed').length;
+    return steps.findIndex((step) => {
+      const tasks = step.tasks || [];
+      const total = tasks.length;
+      const completed = tasks.filter((task) => task.status === 'completed').length;
       return total > 0 && completed < total;
     });
-  }, [plan.steps]);
+  }, [steps]);
 
   // El paso activo por defecto es el primero incompleto.
   // Si todos están completos, no hay paso activo (-1), y abrimos el primero por defecto.
   const defaultOpenStepIndex = firstIncompleteStepIndex === -1 ? 0 : firstIncompleteStepIndex;
-  
   // Estado para controlar qué paso está expandido (abierto)
-  const [openStepId, setOpenStepId] = useState(plan.steps[defaultOpenStepIndex]?.id);
+  const [openStepId, setOpenStepId] = useState(steps[defaultOpenStepIndex]?.id);
+
+  useEffect(() => {
+    setOpenStepId(steps[defaultOpenStepIndex]?.id);
+  }, [steps, defaultOpenStepIndex]);
 
   const handleToggleStep = (stepId) => {
-    setOpenStepId(prevId => (prevId === stepId ? null : stepId));
+    setOpenStepId((prevId) => (prevId === stepId ? null : stepId));
   };
 
   return (
     <div className="stepper-container">
-      {plan.steps.map((step, index) => {
+      {steps.map((step, index) => {
         // Un paso es "el primero incompleto" si su índice coincide con el que encontramos
-        const isFirstIncomplete = (firstIncompleteStepIndex === -1 && index === 0) || (firstIncompleteStepIndex === index);
-        
+        const isFirstIncomplete =
+          (firstIncompleteStepIndex === -1 && index === 0) || firstIncompleteStepIndex === index;
+
         const status = getStepStatus(step, isFirstIncomplete);
-        
+
         return (
           <Step
             key={step.id}
