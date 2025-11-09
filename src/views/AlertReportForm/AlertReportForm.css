@@ -1,172 +1,718 @@
-/* En: src/views/AlertReportForm/AlertReportForm.css */
-/* --- ARCHIVO COMPLETO Y REDISEÑADO CON STEPPER --- */
-
-/* --- CAMBIO: Prefijo .alert-report-form para evitar conflictos --- */
-
-.alert-report-form .h1 {
-  font-size: 28px;
-  color: #005a3a;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #a6e34b;
-  padding-bottom: 10px;
+:root {
+  --alert-hero-start: #0f6b46;
+  --alert-hero-mid: #0c4333;
+  --alert-hero-end: #0a2530;
+  --alert-accent: #1f9d66;
+  --alert-surface: #f1f6f3;
+  --alert-border: rgba(12, 67, 51, 0.12);
 }
 
-.alert-report-form .h2 {
-  font-size: 22px;
-  color: #222;
-  margin-bottom: 20px;
+.alert-report-form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-bottom: 32px;
+}
+
+.alert-report-form .alert-report-hero {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  background: linear-gradient(135deg, rgba(234, 252, 244, 0.95), rgba(225, 239, 254, 0.95));
+  border: 1px solid rgba(12, 116, 64, 0.18);
+  border-radius: 24px;
+  padding: 32px;
+  overflow: hidden;
+}
+
+.alert-report-form .alert-report-hero::after {
+  content: '';
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -70px;
+  top: -80px;
+  background: radial-gradient(circle, rgba(166, 227, 75, 0.35) 0%, rgba(166, 227, 75, 0) 70%);
+}
+
+.alert-report-form .hero-content {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 1;
+}
+
+.alert-report-form .hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(12, 116, 64, 0.12);
+  color: #0c7440;
   font-weight: 600;
-  border-bottom: 1px solid #f0f0f0;
-  padding-bottom: 10px;
+  font-size: 14px;
+  letter-spacing: 0.015em;
 }
 
-.alert-report-form .formGroup {
-  margin-bottom: 25px;
+.alert-report-form .hero-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0b3d2f;
+  margin: 0;
 }
 
-.alert-report-form .label {
-  margin-bottom: 10px;
+.alert-report-form .hero-description {
   font-size: 16px;
-  font-weight: 600;
-  color: #333;
+  color: #36504b;
+  max-width: 540px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* --- CAMBIO: Estilos de la tarjeta de productor eliminados --- */
+/* .alert-report-form .hero-producer-card { ... } */
+/* (Todos los estilos relacionados han sido borrados) */
+
+.alert-report-form .alert-report-content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.alert-report-form .alert-report-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+}
+
+.alert-report-form .alert-report-panel {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e5ebe9;
+  padding: 28px;
+  box-shadow: 0 18px 38px rgba(15, 81, 50, 0.08);
+  /* --- CAMBIO: Añadido para el stepper --- */
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* --- CAMBIO: Estilos del Stepper --- */
+.alert-report-form .alert-report-stepper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.alert-report-form .step-card {
+  flex: 1;
+  min-width: 240px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e5ebe9;
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.alert-report-form .step-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(12, 116, 64, 0.12);
+}
+
+.alert-report-form .step-card.current {
+  border-color: #0c7440;
+  box-shadow: 0 14px 32px rgba(12, 116, 64, 0.18);
+}
+
+.alert-report-form .step-card.completed {
+  border-color: #0c7440;
+  background: linear-gradient(135deg, rgba(12, 116, 64, 0.08), rgba(12, 116, 64, 0.02));
+}
+
+.alert-report-form .step-marker {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(12, 116, 64, 0.12);
+  color: #0c7440;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.alert-report-form .step-card.completed .step-marker {
+  background: #0c7440;
+  color: #ffffff;
+}
+
+.alert-report-form .step-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.alert-report-form .step-title {
   display: flex;
   align-items: center;
   gap: 8px;
+  font-weight: 600;
+  color: #0d2d22;
 }
 
-/* --- NUEVO: Estilo para los pasos --- */
-.alert-report-form .formStep {
-  padding-top: 20px;
-  animation: fadeIn 0.3s ease-in-out;
+.alert-report-form .step-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #54656a;
+  line-height: 1.5;
 }
 
-/* Animación simple de fade-in */
+/* --- Fin de estilos del Stepper --- */
+
+.alert-report-form .step-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.alert-report-form .step-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.alert-report-form .step-header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #0f2e24;
+}
+
+.alert-report-form .step-header p {
+  margin: 0;
+  font-size: 15px;
+  color: #4a5c58;
+  line-height: 1.6;
+}
+
+.alert-report-form .step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(12, 116, 64, 0.14);
+  color: #0c7440;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.alert-report-form .field-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.alert-report-form .field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.alert-report-form .field-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f2e24;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.alert-report-form .field-label.with-icon svg {
+  color: #0c7440;
+}
+
+.alert-report-form .input-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border: 1.5px solid #dbe5de;
+  border-radius: 14px;
+  background: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.alert-report-form .input-with-icon:focus-within {
+  border-color: #0c7440;
+  box-shadow: 0 0 0 4px rgba(12, 116, 64, 0.12);
+}
+
+.alert-report-form .input-with-icon.is-empty {
+  border-style: dashed;
+}
+
+.alert-report-form .modern-select {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 500;
+  color: #1f2f2a;
+  padding: 14px 0;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.alert-report-form .modern-select:disabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.alert-report-form .field-hint {
+  margin: 0;
+  font-size: 13px;
+  color: #6b7a75;
+}
+
+.alert-report-form .chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.alert-report-form .chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid #d7e6da;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1f2f2a;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.alert-report-form .chip:hover {
+  border-color: #9ecfaf;
+}
+
+.alert-report-form .chip.is-active {
+  background: linear-gradient(135deg, rgba(12, 116, 64, 0.16), rgba(12, 116, 64, 0.06));
+  border-color: #0c7440;
+  color: #0c7440;
+  box-shadow: 0 12px 24px rgba(12, 116, 64, 0.18);
+}
+
+.alert-report-form .chip-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.alert-report-form .chip-compact {
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 14px;
+}
+
+.alert-report-form .chip-list.symptoms {
+  max-height: 260px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.alert-report-form .empty-state {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 16px;
+  background: rgba(255, 234, 199, 0.4);
+  border: 1px solid rgba(247, 154, 32, 0.35);
+  color: #8a5312;
+  padding: 14px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.alert-report-form .evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.alert-report-form .evidence-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid #e5ebe9;
+  border-radius: 18px;
+  padding: 20px;
+  background: #ffffff;
+  box-shadow: 0 14px 32px rgba(12, 116, 64, 0.12);
+}
+
+.alert-report-form .evidence-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.alert-report-form .evidence-header h3 {
+  margin: 0;
+  font-size: 17px;
+  color: #0f2e24;
+}
+
+.alert-report-form .evidence-header p {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #6b7a75;
+}
+
+.alert-report-form .evidence-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(12, 116, 64, 0.12);
+  color: #0c7440;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert-report-form .evidence-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.alert-report-form .preview-image {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(12, 116, 64, 0.18);
+  height: 160px;
+}
+
+.alert-report-form .preview-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.alert-report-form .preview-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #0c7440;
+  font-weight: 600;
+}
+
+.alert-report-form .evidence-placeholder {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #6b7a75;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f5f7f6;
+}
+
+.alert-report-form .map-block {
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid #dbe5de;
+  box-shadow: 0 12px 26px rgba(12, 116, 64, 0.12);
+}
+
+.alert-report-form .map-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.alert-report-form .map-status.is-complete {
+  background: rgba(12, 116, 64, 0.08);
+  color: #0c7440;
+}
+
+.alert-report-form .map-status.is-pending {
+  background: rgba(255, 234, 199, 0.4);
+  color: #8a5312;
+}
+
+.alert-report-form .alert-report-summary {
+  background: linear-gradient(180deg, rgba(12, 116, 64, 0.1) 0%, rgba(12, 116, 64, 0.03) 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(12, 116, 64, 0.18);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.alert-report-form .summary-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: #0c7440;
+}
+
+.alert-report-form .summary-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #0f2e24;
+}
+
+.alert-report-form .summary-header p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #4a5c58;
+}
+
+.alert-report-form .summary-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.alert-report-form .progress-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #4a5c58;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.alert-report-form .progress-bar {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(12, 116, 64, 0.12);
+  overflow: hidden;
+}
+
+.alert-report-form .progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #0c7440, #14b8a6);
+  transition: width 0.3s ease;
+}
+
+.alert-report-form .summary-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.alert-report-form .summary-callout.warning {
+  background: rgba(255, 234, 199, 0.4);
+  border: 1px solid rgba(247, 154, 32, 0.4);
+  color: #8a5312;
+}
+
+.alert-report-form .summary-callout.info {
+  background: rgba(225, 239, 254, 0.6);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  color: #1d4ed8;
+}
+
+.alert-report-form .summary-callout.success {
+  background: rgba(12, 116, 64, 0.1);
+  border: 1px solid rgba(12, 116, 64, 0.22);
+  color: #0c7440;
+}
+
+.alert-report-form .summary-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.alert-report-form .summary-item {
+  display: flex;
+  gap: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(12, 116, 64, 0.08);
+  padding: 14px 16px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.alert-report-form .summary-item.is-complete {
+  border-color: rgba(12, 116, 64, 0.28);
+  background: rgba(12, 116, 64, 0.12);
+}
+
+.alert-report-form .summary-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: rgba(12, 116, 64, 0.14);
+  color: #0c7440;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert-report-form .summary-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.alert-report-form .summary-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #4a5c58;
+}
+
+.alert-report-form .summary-value {
+  font-size: 14px;
+  color: #0f2e24;
+  font-weight: 600;
+}
+
+.alert-report-form .formActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.alert-report-form .step-navigation {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.alert-report-form .formActions > * {
+  flex-shrink: 0;
+}
+
+.alert-report-form .formActions button {
+  min-width: 160px;
+}
+
+/* --- CAMBIO: Nuevo estilo para el botón Cancelar --- */
+/* Asume que tu 'Button' component aplica 'variant-secondary' como clase */
+.alert-report-form .button-cancel.variant-secondary {
+  min-width: auto;
+  padding: 0 18px; /* Ajusta el padding para que coincida */
+  background: #ffffff; /* Fondo blanco */
+  border: 1px solid #dbe5de; /* Borde gris como los inputs */
+  color: #4a5c58; /* Color de texto neutro */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+}
+
+.alert-report-form .button-cancel.variant-secondary:hover {
+  background: #fef2f2; /* Fondo rojo pálido */
+  border-color: #fca5a5; /* Borde rojo pálido */
+  color: #b91c1c; /* Texto rojo oscuro */
+  box-shadow: 0 4px 10px -1px rgba(220, 53, 69, 0.1), 0 2px 6px -2px rgba(220, 53, 69, 0.08);
+}
+
+.alert-report-form .button-cancel.variant-secondary:focus-visible {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+  color: #b91c1c;
+}
+/* --- Fin del cambio --- */
+
+
+@media (max-width: 1080px) {
+  .alert-report-form .alert-report-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .alert-report-form .alert-report-summary {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .alert-report-form .alert-report-hero {
+    padding: 24px;
+  }
+
+  .alert-report-form .hero-title {
+    font-size: 26px;
+  }
+
+  .alert-report-form .alert-report-panel {
+    padding: 22px;
+  }
+
+  .alert-report-form .formActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .alert-report-form .button-cancel {
+    order: 3; /* Cancelar al final */
+    min-width: 100%;
+  }
+  
+  .alert-report-form .step-navigation {
+    order: 2; /* Navegación de pasos en medio */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .alert-report-form .formActions button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alert-report-form .step-card,
+  .alert-report-form .progress-fill {
+    transition: none;
+  }
+}
+
+/* --- Animación simple de fade-in --- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.alert-report-form .checkboxGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 10px;
-  background-color: #f7f9fa;
-  border: 1px solid #eef0f2;
-  border-radius: 8px;
-  padding: 15px;
-}
-.alert-report-form .checkboxGrid.symptoms {
-  max-height: 250px; /* Un poco más de altura */
-  overflow-y: auto;
-}
-.alert-report-form .checkboxItem {
-  display: flex;
-  align-items: center;
-  padding: 8px 5px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-.alert-report-form .checkboxItem:hover {
-  background-color: #eef0f2;
-}
-.alert-report-form .checkboxLabel {
-  font-weight: normal;
-  font-size: 15px;
-  color: #333;
-  line-height: 1.4;
-}
-.alert-report-form .checkboxInput {
-  margin-right: 10px;
-  transform: scale(1.1);
-  cursor: pointer;
-}
-
-/* Fotos */
-.alert-report-form .photoUploadGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-}
-.alert-report-form .photoPreview {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-top: 10px;
-  border: 2px solid #ddd;
-}
-
-/* Ubicación */
-.alert-report-form .locationFeedback {
-  margin-top: 15px;
-  color: #005a3a;
-  font-weight: 600;
-  background-color: #e6fffb;
-  border: 1px solid #b3f0e6;
-  padding: 10px 15px;
-  border-radius: 8px;
-}
-
-.alert-report-form .formDivider {
-  border: none;
-  border-top: 1px solid #f0f0f0;
-  margin: 20px 0;
-}
-
-.alert-report-form .formGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-@media (max-width: 768px) {
-  .alert-report-form .formGrid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.alert-report-form .select {
-  width: 100%;
-  padding: 12px 40px 12px 15px;
-  font-size: 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: white;
-  margin-bottom: 15px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  outline: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23555' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 15px center;
-  background-size: 16px;
-  cursor: pointer;
-}
-.alert-report-form .select:focus {
-  border-color: #005a3a;
-  box-shadow: 0 0 0 3px rgba(0,90,58,0.1);
-}
-.alert-report-form .select:disabled {
-  background-color: #f7f7f7;
-  color: #999;
-}
-
-.alert-report-form .textMuted {
-  color: #777;
-  font-style: italic;
-}
-
-/* --- NUEVOS ESTILOS PARA LA NAVEGACIÓN DEL STEPPER --- */
-.alert-report-form .formActions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* Estilo para los botones (asumiendo que .button es global) */
-.alert-report-form .button[disabled] {
-  background-color: #ccc;
-  cursor: not-allowed;
-  opacity: 0.6;
+.alert-report-form .formStep {
+  padding-top: 20px;
+  animation: fadeIn 0.3s ease-in-out;
 }
