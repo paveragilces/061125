@@ -10,6 +10,7 @@ const getStepStatus = (step, isFirstIncompleteStep) => {
   if (totalTasks === 0) return 'completed';
 
   const completedTasks = tasks.filter((task) => task.status === 'completed').length;
+  
   if (completedTasks === totalTasks) {
     return 'completed';
   }
@@ -34,6 +35,7 @@ const PlanStepper = ({ plan, onOpenTaskDetails }) => {
   // El paso activo por defecto es el primero incompleto.
   // Si todos están completos, no hay paso activo (-1), y abrimos el primero por defecto.
   const defaultOpenStepIndex = firstIncompleteStepIndex === -1 ? 0 : firstIncompleteStepIndex;
+  
   // Estado para controlar qué paso está expandido (abierto)
   const [openStepId, setOpenStepId] = useState(steps[defaultOpenStepIndex]?.id);
 
@@ -48,11 +50,11 @@ const PlanStepper = ({ plan, onOpenTaskDetails }) => {
   return (
     <div className="stepper-container">
       {steps.map((step, index) => {
-        // Un paso es "el primero incompleto" si su índice coincide con el que encontramos
         const isFirstIncomplete =
           (firstIncompleteStepIndex === -1 && index === 0) || firstIncompleteStepIndex === index;
 
         const status = getStepStatus(step, isFirstIncomplete);
+        
 
         return (
           <Step

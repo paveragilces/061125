@@ -7,20 +7,20 @@
 .step-item {
   border-radius: 18px;
   border: 1px solid #e2e8f0;
-  background: linear-gradient(135deg, #ffffff, #f8fbff);
-  box-shadow: 0 16px 32px rgba(37, 56, 88, 0.08);
+  background: linear-gradient(135deg, #ffffff, #f3faf5);
+  box-shadow: 0 16px 32px rgba(15, 55, 40, 0.08);
   overflow: hidden;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .step-item.status-active {
-  box-shadow: 0 22px 40px rgba(49, 130, 206, 0.18);
+  box-shadow: 0 22px 40px rgba(31, 157, 102, 0.18);
   transform: translateY(-2px);
-  border-color: rgba(49, 130, 206, 0.25);
+  border-color: rgba(31, 157, 102, 0.25);
 }
 
 .step-item.status-completed {
-  border-color: rgba(56, 161, 105, 0.25);
+  border-color: rgba(47, 133, 90, 0.28);
 }
 
 .step-header {
@@ -40,7 +40,7 @@
 }
 
 .step-header:focus-visible {
-  outline: 2px solid rgba(49, 130, 206, 0.6);
+  outline: 2px solid rgba(31, 157, 102, 0.5);
   outline-offset: 2px;
 }
 
@@ -49,11 +49,11 @@
 }
 
 .step-item.status-active .step-header {
-  background: linear-gradient(135deg, rgba(235, 248, 255, 0.95), rgba(219, 234, 254, 0.8));
+  background: linear-gradient(135deg, rgba(226, 252, 238, 0.92), rgba(209, 250, 229, 0.82));
 }
 
 .step-header:hover {
-  background: rgba(226, 232, 240, 0.4);
+  background: rgba(209, 250, 229, 0.35);
 }
 
 .step-header-title {
@@ -92,8 +92,8 @@
 }
 
 .step-status-chip.tone-active {
-  background: rgba(49, 130, 206, 0.15);
-  color: #2c5282;
+  background: rgba(31, 157, 102, 0.18);
+  color: #1f6f4a;
 }
 
 .step-status-chip.tone-completed {
@@ -102,8 +102,8 @@
 }
 
 .step-status-chip.tone-pending {
-  background: rgba(226, 232, 240, 0.8);
-  color: #4a5568;
+  background: rgba(209, 213, 219, 0.6);
+  color: #374151;
 }
 
 .step-progress-text {
@@ -128,7 +128,7 @@
 
 .step-progress-bar-inner {
   height: 100%;
-  background: linear-gradient(90deg, #63b3ed, #4299e1);
+  background: linear-gradient(90deg, #6ee7b7, #10b981);
   transition: width 0.3s ease;
 }
 
@@ -149,8 +149,8 @@
 }
 
 .step-item.status-active .step-header-toggle {
-  background: rgba(49, 130, 206, 0.15);
-  color: #2c5282;
+  background: rgba(31, 157, 102, 0.15);
+  color: #1f6f4a;
 }
 
 .step-header-toggle.open {
@@ -168,6 +168,7 @@
   max-height: 1000px;
   padding: 0 28px 24px;
   border-top: 1px solid #edf2f7;
+  background-color: var(--containment-surface);
 }
 
 .step-tasks-list {
@@ -195,7 +196,7 @@
 }
 
 .timeline-card:focus-visible {
-  outline: 2px solid rgba(29, 78, 216, 0.65);
+  outline: 2px solid rgba(31, 157, 102, 0.55);
   outline-offset: 3px;
 }
 
@@ -205,8 +206,8 @@
 }
 
 .timeline-card.in_progress {
-  border-color: rgba(59, 130, 246, 0.35);
-  box-shadow: 0 16px 32px rgba(59, 130, 246, 0.14);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 16px 32px rgba(15, 118, 110, 0.16);
 }
 
 .timeline-card.completed {
@@ -236,13 +237,13 @@
 }
 
 .timeline-task-status.tone-pending {
-  background: rgba(226, 232, 240, 0.8);
-  color: #4a5568;
+  background: rgba(209, 213, 219, 0.65);
+  color: #374151;
 }
 
 .timeline-task-status.tone-in-progress {
-  background: rgba(191, 219, 254, 0.85);
-  color: #1d4ed8;
+  background: rgba(167, 243, 208, 0.85);
+  color: #047857;
 }
 
 .timeline-task-status.tone-completed {
@@ -285,7 +286,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #1d4ed8;
+  color: #0f766e;
   font-weight: 600;
 }
 

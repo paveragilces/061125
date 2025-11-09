@@ -4,19 +4,35 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import TaskDetailsModal from './TaskDetailsModal';
 import PlanStepper from './PlanStepper';
-import Icon from '../../components/ui/Icon';
-import { ICONS } from '../../config/icons';
+// Importamos los iconos de Lucide
+import {
+  CheckCircle2,
+  Clock,
+  Square,
+  ShieldCheck,
+  ArrowLeft,
+  User,
+  MapPin,
+  Bug,
+  GripVertical,
+  ListChecks,
+  CalendarDays,
+  Zap,
+  Info,
+  MessageSquare,
+} from 'lucide-react';
 import './ContainmentPlanViewer.css';
-import './PlanStepper.css';
+// Ya no importamos PlanStepper.css aquí
 
+// Actualizamos esta función para que devuelva el componente de icono
 const getStatusToken = (status) => {
   if (status === 'completed') {
-    return { label: 'Plan completado', tone: 'success', icon: ICONS.checkCircle };
+    return { label: 'Plan completado', tone: 'success', icon: <CheckCircle2 size={16} /> };
   }
   if (status === 'active') {
-    return { label: 'Plan en curso', tone: 'info', icon: ICONS.time };
+    return { label: 'Plan en curso', tone: 'info', icon: <Clock size={16} /> };
   }
-  return { label: 'Plan pendiente', tone: 'neutral', icon: ICONS.checkboxEmpty };
+  return { label: 'Plan pendiente', tone: 'neutral', icon: <Square size={16} /> };
 };
 
 const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNavigate }) => {
@@ -144,7 +160,7 @@ const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNa
         <div className="containment-plan-hero empty">
           <div className="hero-heading">
             <div className="hero-icon">
-              <Icon path={ICONS.shieldCheck} size={32} />
+              <ShieldCheck size={32} />
             </div>
             <div>
               <h1 className="h1">Planes de Contención</h1>
@@ -153,7 +169,7 @@ const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNa
           </div>
         </div>
         <div className="emptyState modern">
-          <Icon path={ICONS.checkCircle} size={60} />
+          <CheckCircle2 size={60} />
           <h2>Todo en orden</h2>
           <p>No registramos planes de contención para tus fincas. Sigue monitoreando tus alertas para mantenerte preparado.</p>
         </div>
@@ -181,6 +197,7 @@ const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNa
         <TaskDetailsModal task={editingTask} onClose={handleCloseModal} onSaveTask={handleSaveTask} />
       )}
 
+      {/* --- HEADER SIMPLIFICADO --- */}
       <section className="containment-plan-hero">
         <div className="hero-top-bar">
           <div className="hero-top-left">
@@ -190,14 +207,14 @@ const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNa
                 className="hero-back-button"
                 onClick={() => onNavigate('producerDashboard')}
               >
-                <Icon path={ICONS.back} size={18} />
+                <ArrowLeft size={18} />
                 Volver al panel
               </button>
             )}
           </div>
           {statusToken && (
             <span className={`hero-status-pill tone-${statusToken.tone}`}>
-              <Icon path={statusToken.icon} size={16} />
+              {statusToken.icon}
               {statusToken.label}
             </span>
           )}
@@ -205,7 +222,7 @@ const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNa
 
         <div className="hero-heading">
           <div className="hero-icon">
-            <Icon path={ICONS.shieldCheck} size={32} />
+            <ShieldCheck size={32} />
           </div>
           <div>
             <h1 className="h1">Planes de Contención</h1>
@@ -214,18 +231,18 @@ const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNa
             </p>
             <div className="hero-meta">
               <span className="meta-chip">
-                <Icon path={ICONS.user} size={16} />
+                <User size={16} />
                 {producer.owner}
               </span>
               {selectedPlan && (
                 <span className="meta-chip">
-                  <Icon path={ICONS.location} size={16} />
+                  <MapPin size={16} />
                   {getFincaName(selectedPlan.fincaId)}
                 </span>
               )}
               {selectedPlan && (
                 <span className="meta-chip">
-                  <Icon path={ICONS.disease} size={16} />
+                  <Bug size={16} />
                   {selectedPlan.diseaseName}
                 </span>
               )}
@@ -236,7 +253,7 @@ const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNa
         <div className="plan-selector">
           <label className="label" htmlFor="plan-selector">Seleccionar plan</label>
           <div className="selector-field">
-            <Icon path={ICONS.menu} size={18} />
+            <GripVertical size={18} />
             <select
               id="plan-selector"
               value={selectedPlanId}
@@ -251,61 +268,67 @@ const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNa
           </div>
         </div>
 
-        {selectedPlan && (
-          <div className="plan-stats-grid">
-            <article className="stat-card">
-              <header>
-                <Icon path={ICONS.tasks} size={20} />
-                <span>Avance del plan</span>
-              </header>
-              <strong>{planAnalytics.completionPercent}%</strong>
-              <p>
-                {planAnalytics.completedTasks} de {planAnalytics.totalTasks} tareas completadas
-              </p>
-              <div className="progress-bar">
-                <div style={{ width: `${planAnalytics.completionPercent}%` }} />
-              </div>
-            </article>
-            <article className="stat-card">
-              <header>
-                <Icon path={ICONS.time} size={20} />
-                <span>Tareas en seguimiento</span>
-              </header>
-              <strong>{planAnalytics.inProgressTasks}</strong>
-              <p>{planAnalytics.pendingTasks} pendientes por iniciar</p>
-            </article>
-            <article className="stat-card">
-              <header>
-                <Icon path={ICONS.calendar} size={20} />
-                <span>Creado</span>
-              </header>
-              <strong>{formatDate(selectedPlan.createdAt)}</strong>
-              <p>Última actualización {formatDate(planAnalytics.latestUpdate?.date)}</p>
-            </article>
-            <article className="stat-card highlight">
-              <header>
-                <Icon path={ICONS.action} size={20} />
-                <span>Próxima acción</span>
-              </header>
-              {planAnalytics.nextTask ? (
-                <>
-                  <strong>{planAnalytics.nextTask.text}</strong>
-                  <p>{planAnalytics.nextTask.stepTitle}</p>
-                </>
-              ) : (
-                <>
-                  <strong>Plan al día</strong>
-                  <p>No hay acciones pendientes</p>
-                </>
-              )}
-            </article>
-          </div>
-        )}
+        {/* --- EL GRID DE ESTADÍSTICAS YA NO VA AQUÍ --- */}
       </section>
 
+      {/* --- CONTENIDO PRINCIPAL DE LA PÁGINA --- */}
       {selectedPlan && (
         <div className="plan-content-grid">
-          <div>
+          
+          {/* Columna Principal (Izquierda) */}
+          <div className="plan-main-content">
+            
+            {/* --- GRID DE ESTADÍSTICAS (MOVIDO AQUÍ) --- */}
+            <div className="plan-stats-grid">
+              <article className="stat-card">
+                <header>
+                  <ListChecks size={20} />
+                  <span>Avance del plan</span>
+                </header>
+                <strong>{planAnalytics.completionPercent}%</strong>
+                <p>
+                  {planAnalytics.completedTasks} de {planAnalytics.totalTasks} tareas completadas
+                </p>
+                <div className="progress-bar">
+                  <div style={{ width: `${planAnalytics.completionPercent}%` }} />
+                </div>
+              </article>
+              <article className="stat-card">
+                <header>
+                  <Clock size={20} />
+                  <span>Tareas en seguimiento</span>
+                </header>
+                <strong>{planAnalytics.inProgressTasks}</strong>
+                <p>{planAnalytics.pendingTasks} pendientes por iniciar</p>
+              </article>
+              <article className="stat-card">
+                <header>
+                  <CalendarDays size={20} />
+                  <span>Creado</span>
+                </header>
+                <strong>{formatDate(selectedPlan.createdAt)}</strong>
+                <p>Última actualización {formatDate(planAnalytics.latestUpdate?.date)}</p>
+              </article>
+              <article className="stat-card highlight">
+                <header>
+                  <Zap size={20} />
+                  <span>Próxima acción</span>
+                </header>
+                {planAnalytics.nextTask ? (
+                  <>
+                    <strong>{planAnalytics.nextTask.text}</strong>
+                    <p>{planAnalytics.nextTask.stepTitle}</p>
+                  </>
+                ) : (
+                  <>
+                    <strong>Plan al día</strong>
+                    <p>No hay acciones pendientes</p>
+                  </>
+                )}
+              </article>
+            </div>
+
+            {/* --- ITINERARIO DEL PLAN (STEPPER) --- */}
             <div className="plan-overview-card">
               <div className="plan-overview-header">
                 <div>
@@ -316,23 +339,25 @@ const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNa
               <PlanStepper plan={selectedPlan} onOpenTaskDetails={handleOpenTaskDetails} />
             </div>
           </div>
+
+          {/* Columna Lateral (Derecha) */}
           <aside className="plan-side-panel">
             <div className="side-card">
               <header>
-                <Icon path={ICONS.info} size={18} />
+                <Info size={18} />
                 <span>Resumen del plan</span>
               </header>
               <ul>
                 <li>
-                  <Icon path={ICONS.location} size={16} />
+                  <MapPin size={16} />
                   {getFincaName(selectedPlan.fincaId)} · {selectedPlan.lote}
                 </li>
                 <li>
-                  <Icon path={ICONS.disease} size={16} />
+                  <Bug size={16} />
                   {selectedPlan.diseaseName}
                 </li>
                 <li>
-                  <Icon path={ICONS.tasks} size={16} />
+                  <ListChecks size={16} />
                   {planAnalytics.totalTasks} tareas · {(selectedPlan.steps || []).length} etapas
                 </li>
               </ul>
@@ -340,7 +365,7 @@ const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNa
 
             <div className="side-card next-action">
               <header>
-                <Icon path={ICONS.action} size={18} />
+                <Zap size={18} />
                 <span>Siguiente paso sugerido</span>
               </header>
               {planAnalytics.nextTask ? (
@@ -362,7 +387,7 @@ const ContainmentPlanViewer = ({ producer, plans, fincas, onUpdatePlanTask, onNa
 
             <div className="side-card timeline">
               <header>
-                <Icon path={ICONS.comment} size={18} />
+                <MessageSquare size={18} />
                 <span>Últimos movimientos</span>
               </header>
               {recentUpdates.length === 0 ? (

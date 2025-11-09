@@ -29,7 +29,7 @@ const TaskDetailsModal = ({ task, onClose, onSaveTask }) => {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal-content" style={{ maxWidth: '600px' }}>
+      <div className="modal-content">
         <div className="modal-header">
           <h2 className="h2" style={{ marginTop: 0 }}>Detalle de Tarea</h2>
           <button onClick={onClose} className="modal-close-button">
@@ -38,7 +38,7 @@ const TaskDetailsModal = ({ task, onClose, onSaveTask }) => {
         </div>
         
         <div className="modal-body">
-          <p className="plan-description" style={{ marginBottom: '20px', backgroundColor: '#fff' }}>
+           <p className="modal-task-text">
             {task.text}
           </p>
 
