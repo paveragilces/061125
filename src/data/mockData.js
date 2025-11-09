@@ -241,5 +241,73 @@ export const MOCK_WORK_LOGS = [
   }
 ];
 
-// --- CAMBIO: Este mock ya no es necesario, ha sido fusionado ---
-// export const MOCK_WORKER_CHECKIN_LOGS = [ ... ];
+// --- CAMBIO: ACTUALIZAR MOCK DE PLANES A LA NUEVA ESTRUCTURA (steps) ---
+export const MOCK_CONTAINMENT_PLANS = [
+  // Plan de ejemplo para el productor p1, basado en la alerta a3
+  {
+    id: 'plan-a3',
+    producerId: 'p1',
+    fincaId: 'f1',
+    alertId: 'a3',
+    lote: 'Lote 03 (Producción)',
+    diseaseName: 'Moko',
+    description: 'Protocolo de contención y erradicación para Moko. Requiere acción inmediata y estricta bioseguridad.',
+    status: 'active', // 'active' o 'completed'
+    createdAt: '2024-04-25T10:00:00Z',
+    steps: [ // <-- CORREGIDO DE 'phases' A 'steps'
+      {
+        id: 'step-1', // <-- Corregido de 'phase-1'
+        title: 'Semana 1-2: Shock y Contención',
+        tasks: [
+          { 
+            id: 'a3-moko-1.1', 
+            text: 'Cuarentena: Delimitar y señalizar "Zona Roja" (foco) y "Zona Amarilla" (buffer 5-10m).', 
+            status: 'completed', 
+            completedAt: '2024-04-26T10:00:00Z',
+            log: [
+              { user: 'Juan Valdez', date: '2024-04-26T09:00:00Z', comment: 'Se compró cinta de peligro y estacas.' },
+              { user: 'Juan Valdez', date: '2024-04-26T10:00:00Z', comment: 'Lote delimitado según mapa del técnico.' }
+            ], 
+            evidencePhoto: 'data:image/png;base64,EVIDENCIA-MOCK-1.2' // Foto de ejemplo
+          },
+          { 
+            id: 'a3-moko-1.2', 
+            text: 'Instalar pediluvios (cal, amonio) en un único punto de acceso a la Zona Roja.', 
+            status: 'in_progress', 
+            completedAt: null,
+            log: [
+              { user: 'Juan Valdez', date: '2024-04-27T11:00:00Z', comment: 'Construyendo los cajones. Se compró cal.' }
+            ], 
+            evidencePhoto: null 
+          },
+          { 
+            id: 'a3-moko-1.3', 
+            text: 'Erradicación (Paso 1): Aplicar herbicida sistémico (Glifosato 20%) a plantas enfermas y 5m a la redonda.', 
+            status: 'pending', 
+            completedAt: null,
+            log: [], 
+            evidencePhoto: null 
+          },
+          { 
+            id: 'a3-moko-1.4', 
+            text: 'Control de Vectores: Eliminar flor masculina (bellota) en Zona Amarilla para evitar transmisión por insectos.', 
+            status: 'pending', 
+            completedAt: null,
+            log: [], 
+            evidencePhoto: null 
+          },
+        ]
+      },
+      {
+        id: 'step-2', // <-- Corregido de 'phase-2'
+        title: 'Semana 2-4: Erradicación y Limpieza',
+        tasks: [
+          { id: 'a3-moko-2.1', text: 'Erradicación (Paso 2): Una vez secas, trocear plantas in situ. Aplicar cal a los residuos.', status: 'pending', completedAt: null, log: [], evidencePhoto: null },
+          { id: 'a3-moko-2.2', text: 'Bioseguridad: Desinfección estricta de herramientas entre CADA planta en la zona de trabajo.', status: 'pending', completedAt: null, log: [], evidencePhoto: null },
+          { id: 'a3-moko-2.3', text: 'Monitoreo: Inspección visual semanal de la Zona Amarilla buscando nuevos síntomas.', status: 'pending', completedAt: null, log: [], evidencePhoto: null },
+        ]
+      },
+      // ... más pasos si los tienes
+    ]
+  }
+];

@@ -1,5 +1,5 @@
 // src/App.js
-// --- ARCHIVO CORREGIDO (SIN MOCK_WORKER_CHECKIN_LOGS) ---
+// --- ARCHIVO MODIFICADO (CON FOTOS EN PDF) ---
 
 import React, { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
@@ -20,8 +20,8 @@ import {
   MOCK_FINCAS_FLAT,
   MOCK_CERTIFICATION_HISTORY,
   MOCK_WORKERS,
-  MOCK_WORK_LOGS
-  // --- CAMBIO 1: Eliminada la importación de MOCK_WORKER_CHECKIN_LOGS ---
+  MOCK_WORK_LOGS,
+  MOCK_CONTAINMENT_PLANS
 } from './data/mockData';
 import { 
   MOCK_TASK_TEMPLATES, 
@@ -31,6 +31,7 @@ import {
   LABORES_FINCA,
   CINTAS_COSECHA
 } from './data/constants';
+import { CONTAINMENT_PLAN_TEMPLATES } from './data/protocols'; 
 import { calculateRisk } from './utils/riskCalculator';
 
 // --- SECCIÓN 3: IMPORTAR COMPONENTES REUTILIZABLES ---
@@ -67,6 +68,7 @@ import WorkerLogViewer from './views/WorkerLogViewer/WorkerLogViewer';
 import WorkerProfile from './views/WorkerProfile/WorkerProfile';
 import SubmitWorkLog from './views/SubmitWorkLog/SubmitWorkLog';
 import WorkerCheckInLog from './views/WorkerCheckInLog/WorkerCheckInLog'; 
+import ContainmentPlanViewer from './views/ContainmentPlanViewer/ContainmentPlanViewer'; 
 
 // --- IMPORTACIONES PARA GENERACIÓN DE PDF ---
 import { jsPDF } from 'jspdf';
@@ -74,7 +76,7 @@ import { jsPDF } from 'jspdf';
 
 // --- COMPONENTE INTERNO: Formulario de Registro de Técnico ---
 const RegisterTechnicianForm = ({ onSubmit, onCancel }) => {
-  // ... (Tu componente RegisterTechnicianForm no cambia) ...
+  // ... (Sin cambios) ...
   const [name, setName] = useState('');
   const [zone, setZone] = useState('Norte');
   const handleSubmit = (e) => { e.preventDefault(); if (name && zone) { onSubmit(name, zone); } };
@@ -132,7 +134,6 @@ function App() {
   const [completedTrainingIds, setCompletedTrainingIds] = useState([]);
   const [trainingStartTime, setTrainingStartTime] = useState(null);
 
-
   // --- Estado de Datos (Mocks) ---
   const [alerts, setAlerts] = useState(MOCK_ALERTS);
   const [visits, setVisits] = useState(MOCK_VISITS);
@@ -149,16 +150,14 @@ function App() {
   const [certificationHistory, setCertificationHistory] = useState(MOCK_CERTIFICATION_HISTORY);
   const [workers, setWorkers] = useState(MOCK_WORKERS);
   const [workLogs, setWorkLogs] = useState(MOCK_WORK_LOGS);
-  
-  // --- CAMBIO 2: Estado 'workerCheckInLogs' eliminado ---
-  // const [workerCheckInLogs, setWorkerCheckInLogs] = useState(MOCK_WORKER_CHECKIN_LOGS);
+  const [containmentPlans, setContainmentPlans] = useState(MOCK_CONTAINMENT_PLANS);
 
 
   // --- Efecto para generar tareas iniciales (basado en mocks) ---
   useEffect(() => {
+    // ... (Sin cambios) ...
     const initialTasks = [];
     const completedAlerts = MOCK_ALERTS.filter(a => a.status === 'completed' && a.inspectionData?.audit?.ratings);
-
     completedAlerts.forEach(alert => {
       const ratings = alert.inspectionData.audit.ratings;
       MOCK_INSPECTION_MODULES.forEach(module => {
@@ -183,13 +182,13 @@ function App() {
     if (initialTasks.length > 0) {
       setTasks(prev => [...prev, ...initialTasks]);
     }
-     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 
   // --- Lógica de Negocio (Handlers) ---
 
   const showLoadingAndModal = (message, type = 'success', duration = 500) => {
+    // ... (Sin cambios) ...
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -198,6 +197,7 @@ function App() {
   };
 
   const createNotification = (producerId, text, link) => {
+    // ... (Sin cambios) ...
     const newNotif = {
       id: `n${Date.now()}`,
       producerId,
@@ -209,15 +209,92 @@ function App() {
     setNotifications(prev => [newNotif, ...prev]);
   };
 
+  const handleCreateContainmentPlan = (diagnosisList, alert) => {
+    // ... (Sin cambios) ...
+    const existingPlans = containmentPlans.filter(p => p.alertId === alert.id);
+    diagnosisList.forEach(diagnosis => {
+      const planExists = existingPlans.find(p => p.diseaseName === diagnosis);
+      const template = CONTAINMENT_PLAN_TEMPLATES[diagnosis];
+      if (template && !planExists) {
+        const newSteps = template.steps.map(step => ({
+          ...step,
+          tasks: step.tasks.map(task => ({ 
+            ...task,
+            id: `${alert.id}-${task.id}`, 
+            log: [] 
+          }))
+        }));
+        const newPlan = {
+          id: `plan-${alert.id}-${diagnosis}`,
+          producerId: alert.producerId,
+          fincaId: alert.fincaId,
+          alertId: alert.id,
+          lote: alert.lote,
+          diseaseName: template.diseaseName,
+          description: template.description,
+          status: 'active',
+          createdAt: new Date().toISOString(),
+          steps: newSteps,
+        };
+        setContainmentPlans(prev => [newPlan, ...prev]);
+        createNotification(
+          alert.producerId, 
+          `Se ha activado un Plan de Contención para ${diagnosis} en ${alert.farmName}.`, 
+          'containmentPlans'
+        );
+      }
+    });
+  };
+
+  const handleUpdateTaskDetails = (planId, taskId, updates) => {
+    // ... (Sin cambios) ...
+    setContainmentPlans(prevPlans => 
+      prevPlans.map(plan => {
+        if (plan.id === planId) {
+          let allTasksCompleted = true;
+          const updatedSteps = plan.steps.map(step => ({
+            ...step,
+            tasks: step.tasks.map(task => {
+              let finalTask = task;
+              if (task.id === taskId) {
+                const newLogEntry = (updates.comment && currentUser)
+                  ? { user: currentUser.name, date: new Date().toISOString(), comment: updates.comment }
+                  : null;
+                finalTask = { 
+                  ...task,
+                  status: updates.status,
+                  evidencePhoto: updates.evidencePhoto, 
+                  completedAt: updates.completedAt, 
+                  log: newLogEntry ? [...(task.log || []), newLogEntry] : task.log, 
+                };
+              }
+              if (finalTask.status !== 'completed') {
+                allTasksCompleted = false;
+              }
+              return finalTask;
+            })
+          }));
+          return {
+            ...plan,
+            steps: updatedSteps, 
+            status: allTasksCompleted ? 'completed' : 'active', 
+          };
+        }
+        return plan;
+      })
+    );
+  };
+
   const handleShowTraining = (task) => {
+    // ... (Sin cambios) ...
     setTrainingStartTime(Date.now()); 
     setTrainingModalTask(task);
   };
 
   const handleTrainingComplete = (task) => {
+    // ... (Sin cambios) ...
     const timeElapsed = (Date.now() - trainingStartTime) / 1000; 
     const requiredDuration = task.minWatchTime || 60; 
-
     if (timeElapsed < requiredDuration) {
       setModal({ 
         show: true, 
@@ -232,6 +309,7 @@ function App() {
   };
 
   const handleLogin = (role, page = null) => {
+    // ... (Sin cambios) ...
     setUserRole(role);
     if (role === 'manager') {
       setCurrentUser({ id: 'm1', name: 'Gerente Palmar' });
@@ -261,6 +339,7 @@ function App() {
   };
 
   const handleLogout = () => {
+    // ... (Sin cambios) ...
     setUserRole(null);
     setCurrentUser(null);
     setCurrentPage('login');
@@ -269,6 +348,7 @@ function App() {
   };
 
   const handleNavigate = (page, data = null) => {
+    // ... (Sin cambios) ...
     if (page === 'logout') {
       handleLogout();
       return;
@@ -281,6 +361,7 @@ function App() {
   };
   
   const handleSubmitAlert = (newAlert) => {
+    // ... (Sin cambios) ...
     setLoading(true);
     setTimeout(() => {
       const alertWithId = { ...newAlert, id: `a${Date.now()}` };
@@ -293,6 +374,7 @@ function App() {
   };
 
   const handleSubmitVisitRequest = (requestData) => {
+    // ... (Sin cambios) ...
     return new Promise((resolve) => { 
       setLoading(true);
       setTimeout(() => {
@@ -329,6 +411,7 @@ function App() {
   };
 
   const handleApproveVisit = (visitId, potentialRisk) => { 
+    // ... (Sin cambios) ...
     setLoading(true);
     setTimeout(() => {
       let producerId = '';
@@ -354,6 +437,7 @@ function App() {
   };
 
   const handleRejectVisit = (visitId) => {
+    // ... (Sin cambios) ...
     setLoading(true);
     setTimeout(() => {
       setVisits(prev => prev.map(v => v.id === visitId ? { ...v, status: 'DENIED' } : v));
@@ -363,13 +447,12 @@ function App() {
   };
 
   const handleScanQr = (qrData) => {
+    // ... (Sin cambios) ...
     return new Promise((resolve, reject) => {
       setLoading(true);
       setTimeout(() => {
         const now = new Date().toISOString();
         const todayDate = now.split('T')[0];
-        
-        // 1. ¿ES UN VISITANTE?
         const visit = visits.find(v => v.qrData === qrData);
         if (visit) {
           const visitIndex = visits.indexOf(visit);
@@ -392,19 +475,14 @@ function App() {
           resolve(updatedVisit); 
           return;
         }
-
-        // 2. SI NO ES VISITANTE, ¿ES UN TRABAJADOR?
         const worker = workers.find(w => w.qrCode === qrData);
         if (worker) {
-          // Buscamos un log abierto (check-in de hoy sin check-out)
           const openLog = workLogs.find(log => 
             log.workerId === worker.id && 
             log.date === todayDate && 
             !log.checkOut
           );
-          
           if (!openLog) {
-            // Caso 1: Es un CHECK-IN de trabajador
             const newLog = {
               id: `wl-${Date.now()}`,
               workerId: worker.id,
@@ -420,7 +498,6 @@ function App() {
               description: ''
             };
             setWorkLogs(prev => [newLog, ...prev]);
-            
             setLoading(false);
             resolve({
               id: worker.id,
@@ -433,11 +510,9 @@ function App() {
               isWorker: true 
             });
           } else {
-            // Caso 2: Es un CHECK-OUT de trabajador
             setWorkLogs(prev => prev.map(log => 
               log.id === openLog.id ? { ...log, checkOut: now } : log
             ));
-            
             setLoading(false);
             resolve({
               id: worker.id,
@@ -452,16 +527,14 @@ function App() {
           }
           return;
         }
-
-        // 3. SI NO ES NINGUNO
         setLoading(false);
         reject(new Error("QR Inválido. Código no reconocido."));
-
       }, 500);
     });
   };
   
   const handleCaptureEvidence = (visitId, type, data) => {
+    // ... (Sin cambios) ...
     setVisits(prev => prev.map(v => 
       v.id === visitId ? { ...v, [type]: data } : v
     ));
@@ -469,6 +542,7 @@ function App() {
   };
 
   const handleGeneratePDF = async (visit) => {
+    // ... (Sin cambios, este es para Visitantes) ...
     setLoading(true);
     const doc = new jsPDF();
     try {
@@ -540,12 +614,36 @@ function App() {
     setLoading(false);
   };
   
+  // --- MODIFICADO: Generador de PDF de Alerta (con Fotos) ---
   const handleGenerateAlertPDF = (alert) => {
     setLoading(true);
     const doc = new jsPDF();
     try {
       const tech = technicians.find(t => t.id === alert.techId);
       const resolution = alert.inspectionData?.plant?.data;
+      
+      const addImageToPdf = (label, imageData, startY) => {
+        if (imageData) {
+          try {
+            if (startY > 220) { 
+              doc.addPage(); 
+              startY = 20; 
+            }
+            doc.setFont(undefined, 'normal');
+            doc.setFontSize(10);
+            doc.text(label, 14, startY);
+            doc.addImage(imageData, 'PNG', 14, startY + 3, 80, 60);
+            return startY + 70; 
+          } catch (e) {
+            console.error("Error al añadir imagen al PDF:", e);
+            doc.setTextColor(255, 0, 0);
+            doc.text("Error al cargar la imagen (formato inválido).", 14, startY + 5);
+            doc.setTextColor(100);
+            return startY + 10;
+          }
+        }
+        return startY;
+      };
       
       doc.setFontSize(18);
       doc.setFont(undefined, 'bold');
@@ -570,8 +668,22 @@ function App() {
       
       const attachedPhotos = alert.photos ? Object.entries(alert.photos).filter(([key, value]) => value) : [];
       doc.text(`Fotos Adjuntas: ${attachedPhotos.length}`, 14, y += 7);
+      y += 7;
 
-      y += 12;
+      // --- Bucle para añadir fotos del productor ---
+      if (attachedPhotos.length > 0) {
+        doc.setFontSize(12);
+        doc.setFont(undefined, 'bold');
+        doc.text("Evidencia del Productor", 14, y);
+        y += 7;
+        for (const [key, photoData] of attachedPhotos) {
+          y = addImageToPdf(`Evidencia (${key}):`, photoData, y);
+        }
+      }
+      
+      if (y > 250) { doc.addPage(); y = 20; } 
+
+      y += 5; // Espacio extra
       doc.setFontSize(12);
       doc.setFont(undefined, 'bold');
       doc.text("Estado de la Alerta", 14, y);
@@ -582,8 +694,10 @@ function App() {
 
       if (alert.status === 'assigned' && tech) {
         doc.text(`Técnico Asignado: ${tech.name}`, 14, y += 7);
-        doc.text(`Fecha Programada: ${alert.visitDate}`, 14, y += 7);
+        doc.text(`Fecha Programada: ${alert.visitDate ? new Date(alert.visitDate).toLocaleDateString() : 'N/A'}`, 14, y += 7);
       }
+      
+      if (y > 250) { doc.addPage(); y = 20; } 
 
       if (alert.status === 'completed' && resolution) {
         y += 12;
@@ -609,16 +723,60 @@ function App() {
   const handleAssignAlert = (alertId, comment, diseases, techId, date, priority) => { /* ... */ };
   
   const handleCompleteTask = (taskId) => {
+    // ... (Sin cambios) ...
     setTasks(prev => prev.map(t => t.id === taskId ? { ...t, status: 'completed' } : t));
     showLoadingAndModal('¡Tarea completada!', 'success');
   };
 
   const handleMarkAsRead = (notificationId) => { /* ... */ };
-  const handleSaveInspectionModule = (alertId, partialInspectionData, finalize = false) => { /* ... */ };
+  
+  const handleSaveInspectionModule = (alertId, partialInspectionData, finalize = false) => {
+    // ... (Sin cambios) ...
+    setLoading(true);
+    let alertToTriggerPlan = null; 
+    setAlerts(prevAlerts => 
+      prevAlerts.map(alert => {
+        if (alert.id === alertId) {
+          const updatedInspectionData = {
+            ...alert.inspectionData,
+            ...partialInspectionData
+          };
+          let finalStatus = alert.status;
+          if (finalize) {
+            finalStatus = 'completed'; 
+            if (partialInspectionData.plant) {
+              alertToTriggerPlan = alert; 
+            }
+          }
+          return {
+            ...alert,
+            inspectionData: updatedInspectionData,
+            status: finalStatus
+          };
+        }
+        return alert;
+      })
+    );
+    setTimeout(() => {
+      setLoading(false);
+      if (finalize) {
+        setModal({ show: true, message: '¡Inspección finalizada y guardada!', type: 'success' });
+        if (alertToTriggerPlan && partialInspectionData.plant) {
+          const diagnosis = partialInspectionData.plant.data.diagnosis;
+          handleCreateContainmentPlan(diagnosis, alertToTriggerPlan); 
+        }
+        handleNavigate('technicianSchedule'); 
+      } else {
+        setModal({ show: true, message: 'Módulo guardado. Puede continuar.', type: 'info' });
+      }
+    }, 500);
+  };
+
   const handleRegisterTechnician = (name, zone) => { /* ... */ };
   const handleUpdateTechnicianProfile = (specialties) => { /* ... */ };
   
   const handleEditFinca = (fincaId) => {
+    // ... (Sin cambios) ...
     const finca = currentUser.fincas.find(f => f.id === fincaId);
     if (finca) {
       setFincaToEdit(finca); 
@@ -627,8 +785,8 @@ function App() {
   };
 
   const handleRegisterFinca = (fincaData) => {
+    // ... (Sin cambios) ...
     setLoading(true);
-
     const newProducersList = producers.map(producer => {
       if (producer.id === currentUser.id) {
         return {
@@ -639,17 +797,14 @@ function App() {
       return producer;
     });
     setProducers(newProducersList);
-
     setCurrentUser(prev => ({
       ...prev,
       fincas: [...prev.fincas, fincaData]
     }));
-    
     const newFincasFlat = newProducersList.flatMap(p => 
       p.fincas.map(f => ({...f, producerId: p.id, owner: p.owner}))
     );
     setFincas(newFincasFlat);
-    
     setTimeout(() => {
       setLoading(false);
       setModal({ show: true, message: 'Finca registrada con éxito.', type: 'success' });
@@ -658,8 +813,8 @@ function App() {
   };
 
   const handleUpdateFinca = (updatedFincaData) => {
+    // ... (Sin cambios) ...
     setLoading(true);
-
     const newProducersList = producers.map(producer => {
       if (producer.id === currentUser.id) {
         const updatedFincas = producer.fincas.map(finca => 
@@ -673,19 +828,16 @@ function App() {
       return producer;
     });
     setProducers(newProducersList);
-
     setCurrentUser(prev => ({
       ...prev,
       fincas: prev.fincas.map(finca => 
         finca.id === updatedFincaData.id ? updatedFincaData : finca
       )
     }));
-
     const newFincasFlat = newProducersList.flatMap(p => 
       p.fincas.map(f => ({...f, producerId: p.id, owner: p.owner}))
     );
     setFincas(newFincasFlat);
-    
     setTimeout(() => {
       setLoading(false);
       setModal({ show: true, message: 'Finca actualizada con éxito.', type: 'success' });
@@ -695,6 +847,7 @@ function App() {
   };
 
   const handleRegisterWorker = (workerData) => {
+    // ... (Sin cambios) ...
     setLoading(true);
     const newWorker = {
       ...workerData,
@@ -703,7 +856,6 @@ function App() {
       qrCode: `WORKER-${workerData.idNumber}` 
     };
     setWorkers(prev => [...prev, newWorker]);
-        
     setTimeout(() => {
       setLoading(false);
       setModal({ show: true, message: 'Trabajador registrado con éxito.', type: 'success' });
@@ -711,8 +863,8 @@ function App() {
   };
 
   const handleSubmitWorkLog = (logId, logData) => {
+    // ... (Sin cambios) ...
     setLoading(true);
-    
     setWorkLogs(prevLogs => prevLogs.map(log => {
       if (log.id === logId) {
         return {
@@ -723,11 +875,9 @@ function App() {
       }
       return log;
     }));
-    
     setTimeout(() => {
       setLoading(false);
       setModal({ show: true, message: 'Reporte de labor enviado.', type: 'success' });
-      // No navegamos, el modal se cierra solo
     }, 500);
   };
 
@@ -735,7 +885,7 @@ function App() {
   // --- Renderizado Condicional de Páginas ---
 
   const renderPage = () => {
-    // Públicas
+    // ... (Sin cambios en 'publicas') ...
     if (currentPage === 'login') {
       return <LoginScreen onLogin={handleLogin} />;
     }
@@ -745,13 +895,13 @@ function App() {
     if (currentPage === 'visitorCheckIn') {
       return <VisitorCheckIn onNavigate={handleNavigate} onScanQr={handleScanQr} onCaptureEvidence={handleCaptureEvidence} setModal={setModal} />;
     }
-
     if (!userRole || !currentUser) {
       return <LoginScreen onLogin={handleLogin} />;
     }
 
     switch (userRole) {
       case 'manager':
+        // ... (Sin cambios) ...
         switch (currentPage) {
           case 'managerDashboard':
             return <ManagerDashboard alerts={alerts} visits={visits} technicians={technicians} onNavigate={handleNavigate} />;
@@ -769,10 +919,13 @@ function App() {
 
       case 'producer':
         switch (currentPage) {
+          // ... (Sin cambios en otros cases) ...
           case 'producerDashboard':
             return <ProducerDashboard producer={currentUser} alerts={alerts} visits={visits} tasks={tasks} technicians={technicians} onNavigate={handleNavigate} />;
           case 'reportAlert':
             return <AlertReportForm producer={currentUser} onSubmitAlert={handleSubmitAlert} setModal={setModal} onNavigate={handleNavigate} />;
+          
+          // --- MODIFICADO: Case de Lista de Alertas ---
           case 'producerAlertList': 
             return <ProducerAlertList 
               producer={currentUser} 
@@ -780,18 +933,17 @@ function App() {
               technicians={technicians} 
               onNavigate={handleNavigate} 
               pageData={pageData} 
-              onGenerateAlertPDF={handleGenerateAlertPDF}
+              onGenerateAlertPDF={handleGenerateAlertPDF} // <-- Pasa la función modificada
             />;
+          
           case 'visitorApproval': 
             const myFincaIds = currentUser.fincas.map(f => f.id);
             const visitsToMe = visits.filter(v => myFincaIds.includes(v.fincaId));
             return <VisitorApprovalList producer={currentUser} visits={visitsToMe} onApproveVisit={handleApproveVisit} onRejectVisit={handleRejectVisit} pageData={pageData} onNavigate={handleNavigate} />;
-          
           case 'producerVisitorLog': 
             const myFincaIdsLog = currentUser.fincas.map(f => f.id);
             const producerLog = visits.filter(v => myFincaIdsLog.includes(v.fincaId));
             return <ProducerVisitorLog producerLog={producerLog} onGeneratePDF={handleGeneratePDF} producer={currentUser} onNavigate={handleNavigate} />;
-          
           case 'producerTasks':
             return <ProducerTasks 
               producer={currentUser} 
@@ -801,6 +953,15 @@ function App() {
               pageData={pageData} 
               completedTrainingIds={completedTrainingIds}
               onNavigate={handleNavigate} 
+            />;
+          case 'containmentPlans':
+            const myPlans = containmentPlans.filter(p => p.producerId === currentUser.id);
+            return <ContainmentPlanViewer
+              producer={currentUser}
+              plans={myPlans}
+              fincas={currentUser.fincas}
+              onUpdatePlanTask={handleUpdateTaskDetails} 
+              onNavigate={handleNavigate}
             />;
           case 'producerCertification':
             return <ProducerCertification 
@@ -814,14 +975,12 @@ function App() {
               onMarkAsRead={handleMarkAsRead}
               onNavigate={handleNavigate}
             />;
-          
           case 'producerProfile': 
             return <ProducerProfile 
               producer={currentUser} 
               onNavigate={handleNavigate} 
               onEditFinca={handleEditFinca}
             />;
-          
           case 'fincaRegistration':
             return <FincaRegistration 
               onRegisterFinca={handleRegisterFinca} 
@@ -830,7 +989,6 @@ function App() {
               onUpdateFinca={handleUpdateFinca}
               fincaToEdit={fincaToEdit}
             />;
-          
           case 'manageWorkers':
             const myWorkers = workers.filter(w => w.producerId === currentUser.id);
             return <ManageWorkers 
@@ -851,23 +1009,21 @@ function App() {
               cintasOptions={CINTAS_COSECHA}
               onNavigate={handleNavigate}
             />;
-            
-          // --- CAMBIO 3: 'workerCheckInLog' ahora lee de 'workLogs' ---
           case 'workerCheckInLog':
             const myAllWorkerIds = workers.filter(w => w.producerId === currentUser.id).map(w => w.id);
             const myAllWorkLogs = workLogs.filter(log => 
               myAllWorkerIds.includes(log.workerId)
             );
             return <WorkerCheckInLog 
-              workerLog={myAllWorkLogs} // <-- CORREGIDO
+              workerLog={myAllWorkLogs}
               onNavigate={handleNavigate}
             />;
-            
           default:
             return <ProducerDashboard producer={currentUser} alerts={alerts} visits={visits} tasks={tasks} technicians={technicians} onNavigate={handleNavigate} />;
         }
 
       case 'technician':
+        // ... (Sin cambios) ...
         switch (currentPage) {
           case 'technicianSchedule':
             return <TechnicianSchedule technician={currentUser} alerts={alerts} onNavigate={handleNavigate} />;
@@ -875,7 +1031,7 @@ function App() {
             return <TechnicianInspectionCenter
               alert={pageData}
               onNavigate={handleNavigate}
-              onSaveInspection={handleSaveInspectionModule}
+              onSaveInspection={handleSaveInspectionModule} 
               setModal={setModal}
             />;
           case 'technicianProfile':
@@ -889,9 +1045,9 @@ function App() {
         }
       
       case 'worker':
+        // ... (Sin cambios) ...
         const myProducer = producers.find(p => p.id === currentUser.producerId);
         const producerFincas = myProducer ? myProducer.fincas : [];
-        
         switch (currentPage) {
           case 'workerProfile':
             return <WorkerProfile 
@@ -923,13 +1079,9 @@ function App() {
     }
   };
 
-  // --- CAMBIO 8: CORRECCIÓN DE SINTAXIS ---
-  // Se ha eliminado la 'C' que causaba el error
   const isLoginOrPublicForm = currentPage === 'login' || currentPage === 'visitorAccessPage' || currentPage === 'visitorCheckIn';
 
   const unreadNotifications = userRole === 'producer'
-    // --- CAMBIO 9: CORRECCIÓN DE SINTAXIS ---
-    // Se reemplazó '* 0;' por ': 0;'
     ? notifications.filter(n => n.producerId === currentUser?.id && !n.read).length
     : 0;
 

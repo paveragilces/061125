@@ -1,0 +1,120 @@
+/* En: src/views/ContainmentPlanViewer/PlanStepper.css */
+
+.stepper-container {
+  width: 100%;
+  max-width: 900px; /* Limita el ancho para mejor legibilidad */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espacio entre los pasos */
+}
+
+.step-item {
+  background-color: #ffffff;
+  border: 1px solid #eef0f2;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+  overflow: hidden; /* Para que el borde coloreado funcione bien */
+}
+
+/* --- ESTADO DEL PASO --- */
+.step-item.status-completed {
+  border-left: 5px solid #38A169; /* Verde */
+}
+.step-item.status-active {
+  border-left: 5px solid #3182CE; /* Azul */
+  box-shadow: 0 4px 12px rgba(49, 130, 206, 0.1);
+}
+.step-item.status-pending {
+  border-left: 5px solid #E2E8F0; /* Gris */
+}
+
+/* --- CABECERA DEL PASO --- */
+.step-header {
+  padding: 20px 25px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+}
+.step-item.status-completed .step-header {
+  background-color: #f8fdf8;
+}
+.step-item.status-active .step-header {
+  background-color: #f4f9ff;
+}
+.step-header:hover {
+  background-color: #fcfcfc;
+}
+
+.step-header-title .h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #2D3748;
+}
+.step-item.status-completed .step-header-title .h3 {
+  color: #718096;
+  text-decoration: line-through;
+}
+.step-item.status-active .step-header-title .h3 {
+  color: #2C5282;
+}
+
+.step-header-title .step-progress-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #718096;
+  margin-top: 5px;
+}
+.step-item.status-active .step-header-title .step-progress-text {
+  color: #3182CE;
+}
+
+.step-header-toggle {
+  color: #718096;
+  transition: transform 0.3s ease;
+}
+.step-header-toggle.open {
+  transform: rotate(180deg);
+}
+
+/* Barra de progreso en la cabecera */
+.step-progress-bar {
+  width: 100px;
+  height: 8px;
+  background-color: #E2E8F0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.step-progress-bar-inner {
+  height: 100%;
+  background-color: #38A169; /* Verde */
+  transition: width 0.3s ease;
+}
+.step-item.status-active .step-progress-bar-inner {
+  background-color: #3182CE; /* Azul */
+}
+
+
+/* --- CONTENIDO DEL PASO (TAREAS) --- */
+.step-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  background-color: #ffffff;
+}
+
+.step-content.open {
+  max-height: 1000px; /* Valor grande para permitir la expansión */
+  border-top: 1px solid #eef0f2;
+  transition: max-height 0.5s ease-in;
+}
+
+.step-tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 25px;
+}

@@ -1,203 +1,386 @@
-// En: src/views/ProducerAlertList.jsx
-// --- ARCHIVO COMPLETO CON VISOR DE FOTOS ---
+// En: src/views/ProducerAlertList/ProducerAlertList.jsx
+// --- ARCHIVO COMPLETO (Sin cambios, solo para confirmar) ---
 
-import React, { useState } from 'react';
-import EmptyState from '../../components/ui/EmptyState';
+import React, { useState, useMemo } from 'react';
 import Icon from '../../components/ui/Icon';
-import Modal from '../../components/ui/Modal'; // <-- CAMBIO 1: Importamos Modal
 import { ICONS } from '../../config/icons';
-import './ProducerAlertList.css'; 
+import './ProducerAlertList.css'; // <-- Importación de CSS
 
-/**
- * VISTA: Registro de Alertas (Productor)
- * REDISEÑADA para ser más funcional y moderna.
- */
-const ProducerAlertList = ({ 
-  producer, 
-  alerts, 
-  technicians, 
-  onNavigate, 
-  pageData,
-  onGenerateAlertPDF 
-}) => {
-  const [filterStatus, setFilterStatus] = useState(pageData?.filter || 'pending'); 
-  
-  // --- CAMBIO 2: Nuevo estado para el modal de fotos ---
-  const [viewingAlertPhotos, setViewingAlertPhotos] = useState(null);
-  
-  const myAlerts = alerts.filter(a => a.producerId === producer.id);
-  const filteredAlerts = myAlerts.filter(a => a.status === filterStatus);
+// --- Componente de Modal de Vista Previa de Imagen ---
+const ImagePreviewModal = ({ src, onClose }) => (
+  <div className="image-preview-backdrop" onClick={onClose}>
+    <div className="image-preview-content">
+      <button className="image-preview-close" onClick={onClose}>
+        <Icon path={ICONS.reject} size={24} color="#fff" />
+      </button>
+      <img src={src} alt="Vista previa de evidencia" />
+    </div>
+  </div>
+);
 
-  // --- Lógica para el Countdown (Sin cambios) ---
-  const getCountdown = (date) => {
-    if (!date) return { text: 'Sin fecha', className: 'urgency-low' };
-    const today = new Date(new Date().toISOString().split('T')[0]);
-    const visitDate = new Date(new Date(date).toISOString().split('T')[0]);
-    const diffTime = visitDate - today;
-    const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+// --- Lista de Meses ---
+const MONTHS = [
+  { value: 'all', label: 'Todos los Meses' },
+  { value: '01', label: 'Enero' },
+  { value: '02', label: 'Febrero' },
+  { value: '03', label: 'Marzo' },
+  { value: '04', label: 'Abril' },
+  { value: '05', label: 'Mayo' },
+  { value: '06', label: 'Junio' },
+  { value: '07', label: 'Julio' },
+  { value: '08', label: 'Agosto' },
+  { value: '09', label: 'Septiembre' },
+  { value: '10', label: 'Octubre' },
+  { value: '11', label: 'Noviembre' },
+  { value: '12', label: 'Diciembre' },
+];
 
-    if (days < 0) return { text: 'Visita Atrasada', className: 'urgency-high' };
-    if (days === 0) return { text: 'Visita Hoy', className: 'urgency-high' };
-    if (days === 1) return { text: 'Visita Mañana', className: 'urgency-medium' };
-    return { text: `Visita en ${days} días`, className: 'urgency-low' };
+const ProducerAlertList = ({ producer, alerts, technicians, onNavigate, pageData, onGenerateAlertPDF }) => {
+
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [filterYear, setFilterYear] = useState('all');
+  const [filterMonth, setFilterMonth] = useState('all');
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const getTechnicianName = (techId) => {
+    const tech = technicians.find(t => t.id === techId);
+    return tech ? tech.name : null;
   };
 
-  // --- El nuevo componente de Tarjeta de Alerta ---
-  const AlertCard = ({ alert }) => {
-    const tech = alert.techId ? technicians.find(t => t.id === alert.techId) : null;
-    const countdown = getCountdown(alert.visitDate);
-    const resolution = alert.inspectionData?.plant?.data;
-    const attachedPhotos = alert.photos ? Object.entries(alert.photos).filter(([key, value]) => value) : [];
+  const getStatusInfo = (status) => {
+    switch (status) {
+      case 'pending':
+        return { text: 'Pendiente', className: 'status-pending' };
+      case 'assigned':
+        return { text: 'Asignado', className: 'status-assigned' };
+      case 'completed':
+        return { text: 'Completado', className: 'status-completed' };
+      default:
+        return { text: status, className: 'status-default' };
+    }
+  };
 
-    const getStatusTag = () => {
-      if (alert.status === 'pending') return <span className="tag tag-pending">Pendiente</span>;
-      if (alert.status === 'assigned') return <span className={`tag tag-assigned ${countdown.className}`}>{countdown.text}</span>;
-      if (alert.status === 'completed') return <span className="tag tag-completed">Completada</span>;
-      return null;
+  // --- Generar lista de años disponibles ---
+  const uniqueYears = useMemo(() => {
+    const years = new Set(alerts.map(alert => alert.date.substring(0, 4)));
+    return Array.from(years).sort((a, b) => b - a); // Ordenar descendente
+  }, [alerts]);
+
+  // --- Lógica de filtrado con Año y Mes ---
+  const filteredAlerts = useMemo(() => {
+    let sorted = [...alerts].sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    // 1. Filtro de estado
+    if (activeFilter !== 'all') {
+      sorted = sorted.filter(alert => alert.status === activeFilter);
+    }
+    
+    // 2. Filtro de Año
+    if (filterYear !== 'all') {
+      sorted = sorted.filter(alert => alert.date.substring(0, 4) === filterYear);
+    }
+
+    // 3. Filtro de Mes
+    if (filterMonth !== 'all') {
+      sorted = sorted.filter(alert => alert.date.substring(5, 7) === filterMonth);
+    }
+    
+    return sorted;
+  }, [alerts, activeFilter, filterYear, filterMonth]); 
+
+
+  const renderAlertCard = (alert) => {
+    const techName = getTechnicianName(alert.techId);
+    const statusInfo = getStatusInfo(alert.status);
+    
+    const d = new Date(alert.date);
+    const day = d.getUTCDate(); // Usar UTC para evitar problemas de zona horaria
+    const month = d.toLocaleString('es-ES', { month: 'short', timeZone: 'UTC' }).toUpperCase().replace('.', '');
+    
+    const photos = alert.photos ? Object.values(alert.photos).filter(Boolean) : [];
+    const hasPhotos = photos.length > 0;
+    
+    let managerDiagnosis = 'Sin Diagnóstico';
+    if (alert.possibleDisease && alert.possibleDisease.length > 0) {
+      managerDiagnosis = alert.possibleDisease.join(', ');
+    } else if (alert.managerComment) {
+      managerDiagnosis = alert.managerComment;
+    }
+
+    const handleImageClick = (e, photoSrc) => {
+      e.stopPropagation(); 
+      setPreviewImage(photoSrc);
     };
 
     return (
-      <div className="alertCard">
-        <div className="alertCardHeader">
-          <div className="alertCardTitle">
-            <span className="alertFarmName">{alert.farmName}</span>
-            <span className="alertLote">(Lote: {alert.lote})</span>
+      <button 
+        key={alert.id} 
+        className="alert-card" 
+        onClick={() => onNavigate('producerAlertList', alert)}
+        title="Ver detalles de la alerta"
+      >
+        <div className="alert-card-header">
+          <div className="alert-card-date">
+            <span className="date-day">{day < 10 ? `0${day}` : day}</span>
+            <span className="date-month">{month}</span>
           </div>
-          {getStatusTag()}
+          
+          <div className="alert-card-header-main">
+            <h3 className="alert-card-title">{alert.farmName}</h3>
+            <span className="alert-card-subtitle">
+              <Icon path={ICONS.location} size={14} /> {alert.lote}
+            </span>
+          </div>
+          <span className={`alert-status-tag ${statusInfo.className}`}>
+            {statusInfo.text}
+          </span>
         </div>
 
-        <div className="alertCardBody">
-          {/* --- 1. Mi Reporte (Síntomas y Fotos) --- */}
-          <div className="alertCardSection">
-            <h3 className="sectionTitle">Mi Reporte</h3>
-            <p className="sectionContent symptoms">{alert.symptoms.join(', ')}</p>
-            {attachedPhotos.length > 0 && (
-              // --- CAMBIO 3: Convertido a <button> ---
-              <button 
-                className="photoChip"
-                onClick={() => setViewingAlertPhotos(attachedPhotos)}
-              >
-                <Icon path={ICONS.camera} size={14} />
-                {attachedPhotos.length} Foto(s) Adjunta(s) (Ver)
-              </button>
+        <div className="alert-card-body">
+          {hasPhotos ? (
+            <div className="alert-card-mosaic">
+              {photos.slice(0, 3).map((photo, index) => (
+                <img 
+                  key={index} 
+                  src={photo} 
+                  alt={`Evidencia ${index + 1}`} 
+                  className="mosaic-image" 
+                  onClick={(e) => handleImageClick(e, photo)}
+                />
+              ))}
+              {photos.length > 3 && (
+                <div 
+                  className="mosaic-more" 
+                  onClick={(e) => handleImageClick(e, photos[3])} 
+                >
+                  +{photos.length - 3}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="mosaic-placeholder">
+              <Icon path={ICONS.camera} size={24} color="#CBD5E0" />
+              <span>No hay fotos, síntomas reportados:</span>
+              <p>{alert.symptoms.join(', ')}</p>
+            </div>
+          )}
+        </div>
+
+        <div className="alert-card-footer">
+          <div className="footer-item">
+            <span>Técnico:</span>
+            {techName ? (
+              <strong>{techName}</strong>
+            ) : (
+              <strong className="unassigned">Sin Asignar</strong>
             )}
           </div>
-
-          {/* --- 2. Asignación (Con comentario del gerente) --- */}
-          {alert.status === 'assigned' && tech && (
-            <div className="alertCardSection assigned">
-              <h3 className="sectionTitle">Visita Programada</h3>
-              <p className="sectionContent"><strong>Técnico:</strong> {tech.name}</p>
-              <p className="sectionContent"><strong>Fecha:</strong> {alert.visitDate}</p>
-              {alert.managerComment && (
-                <p className="sectionContent manager-comment">
-                  <strong>Comentario del Gerente:</strong> "{alert.managerComment}"
-                </p>
-              )}
-              <p className="sectionContent specialties">
-                <strong>Especialidades:</strong> {tech.specialties.join(', ')}
-              </p>
-            </div>
-          )}
-
-          {/* --- 3. Resolución (Sin cambios) --- */}
-          {alert.status === 'completed' && resolution && (
-            <div className="alertCardSection completed">
-              <h3 className="sectionTitle">Resolución del Técnico</h3>
-              <p className="sectionContent diagnosis">
-                <strong>Diagnóstico:</strong> {resolution.diagnosis.join(', ')}
-              </p>
-              <p className="sectionContent actions">
-                <strong>Acciones:</strong> {resolution.actions.join(', ')}
-              </p>
-            </div>
-          )}
+          <div className="footer-item">
+            <span>Prioridad:</span>
+            {alert.priority ? (
+              <strong>{alert.priority}</strong>
+            ) : (
+              <strong className="unassigned">Sin Definir</strong>
+            )}
+          </div>
+          <div className="footer-item">
+            <span>Diagnóstico (Gerente):</span>
+            {managerDiagnosis !== 'Sin Diagnóstico' ? (
+              <strong className="manager-diag">{managerDiagnosis}</strong>
+            ) : (
+              <strong className="unassigned">{managerDiagnosis}</strong>
+            )}
+          </div>
         </div>
+      </button>
+    );
+  };
 
-        {/* --- Footer (Sin cambios) --- */}
-        <div className="alertCardFooter">
-          <span>Reportada: {alert.date}</span>
-          <div className="alertCardFooterActions">
-            <span className={`alertPriority ${alert.priority === 'Alta' ? 'priority-high' : 'priority-medium'}`}>
-              Prioridad: {alert.priority || 'N/A'}
-            </span>
+  const renderAlertList = () => {
+    return (
+      <div className="alert-list-container">
+        {filteredAlerts.length > 0 ? (
+          filteredAlerts.map(alert => renderAlertCard(alert))
+        ) : (
+          <div className="emptyState full-width">
+            <Icon path={ICONS.filter} size={60} color="#ccc" />
+            <h2>Sin Alertas</h2>
+            <p>No se encontraron alertas que coincidan con el filtro seleccionado.</p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const renderFilterTabs = () => {
+    const filters = [
+      { key: 'all', label: 'Todos', icon: ICONS.filter },
+      { key: 'pending', label: 'Pendientes', icon: ICONS.alert },
+      { key: 'assigned', label: 'Asignadas', icon: ICONS.technician },
+      { key: 'completed', label: 'Completadas', icon: ICONS.checkCircle }
+    ];
+
+    return (
+      <div className="filter-controls">
+        <div className="filter-tabs">
+          {filters.map(filter => (
             <button
-              className="alertPdfButton"
-              onClick={() => onGenerateAlertPDF(alert)}
-              title="Descargar Constancia/Reporte PDF"
+              key={filter.key}
+              className={`filter-button ${activeFilter === filter.key ? 'active' : ''}`}
+              onClick={() => setActiveFilter(filter.key)}
             >
-              <Icon path={ICONS.download} size={16} />
+              <Icon path={filter.icon} />
+              <span>{filter.label}</span>
             </button>
+          ))}
+        </div>
+        
+        <div className="filter-selects">
+          <div className="filter-select-wrapper">
+            <Icon path={ICONS.calendar} />
+            <select 
+              className="filter-select" 
+              value={filterYear} 
+              onChange={(e) => setFilterYear(e.target.value)}
+            >
+              <option value="all">Todos los Años</option>
+              {uniqueYears.map(year => (
+                <option key={year} value={year}>{year}</option>
+              ))}
+            </select>
+          </div>
+          
+          <div className="filter-select-wrapper">
+            <Icon path={ICONS.calendar} />
+            <select 
+              className="filter-select" 
+              value={filterMonth} 
+              onChange={(e) => setFilterMonth(e.target.value)}
+              disabled={filterYear === 'all'} 
+            >
+              {MONTHS.map(month => (
+                <option key={month.value} value={month.value}>{month.label}</option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
     );
   };
 
-  return (
-    <div className="container producer-alert-list-page">
-      <div className="alertListHeader">
-        <h1 className="h1">Mis Alertas Registradas</h1>
-        <button
-          className="button btn-primary"
-          onClick={() => onNavigate('reportAlert')}
-        >
-          <Icon path={ICONS.report} /> Reportar Nueva Alerta
-        </button>
-      </div>
 
-      {/* Pestañas de Filtro (Sin cambios) */}
-      <div className="tabContainer">
-        <button
-          className={`tabButton ${filterStatus === 'pending' ? 'active' : ''}`}
-          onClick={() => setFilterStatus('pending')}>
-          Pendientes ({myAlerts.filter(a => a.status === 'pending').length})
+  const renderAlertDetail = (alert) => {
+    // ... (Sin cambios) ...
+    const techName = getTechnicianName(alert.techId);
+    const statusInfo = getStatusInfo(alert.status);
+    const resolution = alert.inspectionData?.plant?.data;
+    return (
+      <div className="alert-detail-container">
+        <button className="button-back" onClick={() => onNavigate('producerAlertList')}>
+          <Icon path={ICONS.back} /> Volver al listado
         </button>
-        <button
-          className={`tabButton ${filterStatus === 'assigned' ? 'active' : ''}`}
-          onClick={() => setFilterStatus('assigned')}>
-          Asignadas ({myAlerts.filter(a => a.status === 'assigned').length})
-        </button>
-        <button
-          className={`tabButton ${filterStatus === 'completed' ? 'active' : ''}`}
-          onClick={() => setFilterStatus('completed')}>
-          Completadas ({myAlerts.filter(a => a.status === 'completed').length})
-        </button>
-      </div>
-
-      {filteredAlerts.length === 0 ? (
-        <EmptyState
-          iconPath={ICONS.checkCircle}
-          title={`No hay alertas ${filterStatus}`}
-          message="No tienes alertas en esta categoría."
-        />
-      ) : (
-        <div className="alertListContainer">
-          {filteredAlerts.map(alert => <AlertCard key={alert.id} alert={alert} />)}
+        <div className="alert-detail-header">
+          <div>
+            <h1 className="h1">Detalle de Alerta #{alert.id}</h1>
+            <p className="alert-detail-finca">{alert.farmName} - {alert.lote}</p>
+          </div>
+          <span className={`alert-status-tag ${statusInfo.className}`}>
+            {statusInfo.text}
+          </span>
         </div>
-      )}
-
-      {/* --- CAMBIO 4: Añadimos el Modal --- */}
-      {viewingAlertPhotos && (
-        <Modal
-          title="Fotos Adjuntas de la Alerta"
-          onClose={() => setViewingAlertPhotos(null)}
-          size="large"
-        >
-          <div className="photoModalGallery">
-            {viewingAlertPhotos.length === 0 ? (
-              <p>No se encontraron fotos para esta alerta.</p>
-            ) : (
-              // attachedPhotos es un array de [key, value]
-              viewingAlertPhotos.map(([part, photoSrc], index) => (
-                <div key={index} className="photoModalItem">
-                  <img src={photoSrc} alt={`Evidencia de ${part}`} />
-                  <span className="photoModalLabel">Evidencia de: {part}</span>
+        <div className="alert-detail-grid">
+          <div className="card">
+            <h3 className="h3">Reporte del Productor</h3>
+            <div className="detail-item">
+              <label>Fecha de Reporte:</label>
+              <span>{new Date(alert.date).toLocaleDateString()}</span>
+            </div>
+            <div className="detail-item">
+              <label>Partes Afectadas:</label>
+              <span>{Object.keys(alert.parts).join(', ')}</span>
+            </div>
+            <div className="detail-item">
+              <label>Síntomas Reportados:</label>
+              <span>{alert.symptoms.join(', ')}</span>
+            </div>
+            <div className="detail-item">
+              <label>Fotos Adjuntas:</label>
+              <div className="photo-gallery">
+                {alert.photos && Object.values(alert.photos).filter(Boolean).length > 0 ? (
+                  Object.entries(alert.photos).map(([key, photoData]) => (
+                    photoData ? <img key={key} src={photoData} alt={key} /> : null
+                  ))
+                ) : (
+                  <span>No se adjuntaron fotos.</span>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="card">
+            <h3 className="h3">Diagnóstico del Técnico</h3>
+            <div className="detail-item">
+              <label>Técnico Asignado:</label>
+              <span>{techName || 'Pendiente'}</span>
+            </div>
+            <div className="detail-item">
+              <label>Fecha de Visita:</label>
+              <span>{alert.visitDate ? new Date(alert.visitDate).toLocaleDateString() : 'Pendiente'}</span>
+            </div>
+            <div className="detail-item">
+              <label>Prioridad:</label>
+              <span>{alert.priority || 'Pendiente'}</span>
+            </div>
+            {resolution ? (
+              <>
+                <h4 className="h4" style={{marginTop: '20px'}}>Resultados de la Inspección</h4>
+                <div className="detail-item">
+                  <label>Diagnóstico Final:</label>
+                  <span className="tag-diagnosis">{resolution.diagnosis.join(', ')}</span>
                 </div>
-              ))
+                <div className="detail-item">
+                  <label>Acciones Inmediatas:</label>
+                  <span>{resolution.actions.join(', ')}</span>
+                </div>
+                <div className="detail-item">
+                  <label>Recomendaciones:</label>
+                  <p>{resolution.recommendations}</p>
+                </div>
+              </>
+            ) : (
+              <div className="emptyState mini">
+                <Icon path={ICONS.technician} size={40} color="#ccc" />
+                <p>La inspección aún no ha sido completada.</p>
+              </div>
             )}
           </div>
-        </Modal>
+        </div>
+        <div className="alert-detail-actions">
+          <button className="button button-secondary" onClick={() => onGenerateAlertPDF(alert)}>
+            <Icon path={ICONS.download} /> Descargar Reporte
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+
+  // --- Renderizado Principal ---
+  return (
+    <div className="container">
+      {previewImage && (
+        <ImagePreviewModal src={previewImage} onClose={() => setPreviewImage(null)} />
+      )}
+      {pageData ? renderAlertDetail(pageData) : (
+        <>
+          <div className="header-container">
+            <h1 className="h1">Registro de Alertas</h1>
+            <button className="button btn-primary" onClick={() => onNavigate('reportAlert')}>
+              <Icon path={ICONS.alert} /> Reportar Nueva Alerta
+            </button>
+          </div>
+          {renderFilterTabs()}
+          {renderAlertList()}
+        </>
       )}
     </div>
   );

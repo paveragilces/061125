@@ -1,104 +1,144 @@
-/* --- ESTILOS DEL SIDEBAR REDISEÑADO --- */
+/* En: src/components/layout/Sidebar.css */
+/* --- ARCHIVO MODIFICADO (Nuevo Diseño) --- */
+
+:root {
+  --sidebar-width: 260px;
+  --color-primary: #008a5a;
+  --color-primary-dark: #005a3a;
+  --color-primary-light: #f0fff4; /* Verde muy claro para fondo activo */
+  --color-text-primary: #1A202C;
+  --color-text-secondary: #718096;
+  --color-background-hover: #f7f9fa;
+  --color-border: #eef0f2;
+}
+
 .sidebar {
-  width: 260px;
+  width: var(--sidebar-width);
   height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #FFFFFF; /* Fondo blanco limpio */
-  border-right: 1px solid #eef0f2; /* Borde sutil */
+  background-color: #ffffff;
+  border-right: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 20px 0;
-  box-sizing: border-box;
-  z-index: 101;
+  z-index: 100;
+  box-sizing: border-box; /* Añadido para consistencia */
 }
 
 .sidebarLogo {
-  font-size: 28px;
-  font-weight: 700;
-  text-align: center;
-  padding: 10px 20px 30px 20px;
-  color: #005a3a; /* Color corporativo */
+  font-size: 2rem;
+  font-weight: 800;
+  padding: 0 25px;
+  margin-bottom: 25px;
+  color: var(--color-text-primary);
+  box-sizing: border-box; /* Añadido para consistencia */
 }
 
 .sidebarLogoSub {
-  color: #a6e34b; /* Verde lima */
-  font-weight: 500;
+  font-weight: 300;
+  color: var(--color-primary);
 }
 
 .sidebarNav {
   display: flex;
   flex-direction: column;
-  gap: 2px; /* Espacio entre botones */
+  padding: 0 15px; /* Espacio lateral para los botones */
+  overflow-y: auto; /* Permite scroll si hay muchos items */
+  flex-grow: 1; /* Hace que la navegación ocupe el espacio */
 }
 
-/* --- Botones de Navegación (Píldoras) --- */
+/* --- Título de Grupo (NUEVO) --- */
+.sidebarGroupTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 10px; /* Alineado con el padding de los botones */
+  margin: 20px 0 8px 0;
+  box-sizing: border-box; /* Añadido para consistencia */
+}
+/* El primer grupo no necesita margen superior */
+.sidebarNav > .sidebarGroupTitle:first-child {
+  margin-top: 0;
+}
+
+/* --- Botón de Navegación (MODIFICADO) --- */
 .sidebarButton {
   display: flex;
   align-items: center;
-  gap: 14px;
-  background: transparent;
+  gap: 14px; /* Un poco más de espacio */
+  padding: 11px 15px; /* Ligeramente más alto */
+  border-radius: 8px;
   border: none;
-  padding: 12px 28px; /* Padding ajustado */
-  margin: 2px 16px; /* Margen horizontal para efecto "píldora" */
-  font-size: 15px;
-  font-weight: 500;
+  background-color: transparent;
+  width: 100%;
   text-align: left;
-  color: #4A5568; /* Gris neutral */
-  border-radius: 8px; /* Bordes redondeados */
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  box-sizing: border-box; /* Añadido para consistencia */
 }
 
+.sidebarButton span {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: color 0.2s ease;
+  line-height: 1.2; /* Asegura alineación vertical */
+}
+
+/* Icono */
 .sidebarButton svg {
-  color: #718096; /* Iconos en gris más claro */
-  transition: color 0.2s ease-in-out;
+  width: 20px; /* Tamaño de icono consistente */
+  height: 20px; /* Tamaño de icono consistente */
+  flex-shrink: 0; /* Evita que el icono se encoja */
 }
 
-/* --- Estado Hover (No seleccionado) --- */
-.sidebarButton:not(.selected):hover {
-  background-color: #f7f9fa; /* Gris de fondo suave */
-  color: #1A202C; /* Texto más oscuro */
+
+/* --- Estado Hover (MODIFICADO) --- */
+.sidebarButton:hover {
+  background-color: var(--color-background-hover);
+}
+.sidebarButton:hover span {
+  color: var(--color-text-primary);
+}
+/* El color del icono en hover es manejado por la prop 'color' */
+.sidebarButton:hover svg {
+  color: var(--color-text-primary) !important;
 }
 
-.sidebarButton:not(.selected):hover svg {
-  color: #4A5568;
-}
-
-/* --- Estado Seleccionado --- */
+/* --- Estado Seleccionado (MODIFICADO) --- */
 .sidebarButton.selected {
-  background-color: #f0f9f5; /* Tinte verde muy claro */
-  color: #005a3a; /* Color corporativo */
-  font-weight: 600; /* Más grueso */
+  background-color: var(--color-primary-light);
 }
 
-.sidebarButton.selected svg {
-  color: #005a3a; /* Icono verde */
+.sidebarButton.selected span {
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+/* (El color del SVG se maneja por props en el .jsx) */
+
+
+/* --- Divisor (Oculto) --- */
+.sidebarDivider {
+  display: none; 
 }
 
-
-/* --- Footer (MODIFICADO) --- */
+/* --- Footer (Sin Cambios) --- */
 .sidebarFooter {
-  padding: 0 20px;
-  border-top: 1px solid #eef0f2; /* Separador sutil */
+  padding: 20px 25px 0;
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0; /* Evita que el footer se encoja */
 }
 
 .footerLogoContainer {
-  /* CAMBIO AQUÍ: Ajustado el padding */
-  padding: 20px 0; 
-  text-align: center;
+  opacity: 0.6;
 }
 
 .footerLogo {
-  /* CAMBIO AQUÍ: Ajustes para el nuevo logo SVG */
-  height: 140px;
-  opacity: 1;
-  width: 120px; /* Ancho añadido para asegurar que se vea bien */
-}
-
-.footerLogoText {
-  font-size: 13px;
-  color: #718096;
+  width: 100px;
+  height: auto;
 }
