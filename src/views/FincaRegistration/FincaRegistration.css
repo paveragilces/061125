@@ -1,41 +1,464 @@
-/* En: src/views/FincaRegistration/FincaRegistration.css */
-/* --- ARCHIVO LIMPIO Y MODIFICADO --- */
+/* src/views/FincaRegistration/FincaRegistration.css */
 
-.formGrid {
+.finca-registration {
+  --finca-accent: var(--sidebar-accent, #1f9d66);
+  --finca-accent-strong: var(--sidebar-accent-strong, #0f7a4f);
+  --finca-surface: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.finca-registration__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.finca-registration__back-button {
+  margin-bottom: 0;
+}
+
+.finca-registration__titles {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.finca-registration__title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a202c;
+  line-height: 1.2;
+}
+
+.finca-registration__subtitle {
+  margin: 0;
+  color: #4a5568;
+  font-size: 15px;
+  max-width: 620px;
+}
+
+.finca-registration__progress {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.finca-registration__progress-step {
+  background-color: #f4faf6;
+  border: 1px solid #d9f1e4;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  min-height: 96px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.finca-registration__progress-step--complete {
+  border-color: var(--finca-accent);
+  background-color: #ffffff;
+  box-shadow: 0 10px 24px rgba(15, 90, 57, 0.12);
+}
+
+.finca-registration__progress-step--active {
+  border-color: rgba(31, 157, 102, 0.55);
+  box-shadow: 0 6px 16px rgba(31, 157, 102, 0.1);
+}
+
+.finca-registration__progress-step:hover {
+  transform: translateY(-2px);
+}
+
+.finca-registration__step-index {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background-color: rgba(31, 157, 102, 0.12);
+  color: var(--finca-accent);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.finca-registration__progress-step--complete .finca-registration__step-index {
+  background-color: var(--finca-accent);
+  color: #ffffff;
+}
+
+.finca-registration__step-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.finca-registration__step-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.finca-registration__step-description {
+  font-size: 14px;
+  color: #4a5568;
+  line-height: 1.4;
+}
+
+.finca-registration__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.finca-registration__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.finca-registration__card {
+  background-color: var(--finca-surface);
+  border-radius: 20px;
+  border: 1px solid #ecf1f0;
+  padding: 24px 26px;
+  box-shadow: 0 14px 32px rgba(18, 68, 50, 0.07);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.finca-registration__card--summary {
+  border: 1px solid rgba(31, 157, 102, 0.35);
+  background: linear-gradient(180deg, rgba(241, 251, 245, 0.9) 0%, #ffffff 60%);
+}
+
+.finca-registration__card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.finca-registration__card-header-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background-color: rgba(31, 157, 102, 0.12);
+  color: var(--finca-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.finca-registration__section-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.finca-registration__section-subtitle {
+  margin: 2px 0 0;
+  color: #556273;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.finca-registration__form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
+.finca-registration__helper-text {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.finca-registration__map {
+  border-radius: 18px;
+  border: 1px solid rgba(31, 157, 102, 0.2);
+  overflow: hidden;
+}
+
+.finca-registration__location-feedback,
+.finca-registration__map-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.finca-registration__location-feedback {
+  background-color: rgba(31, 157, 102, 0.12);
+  color: var(--finca-accent-strong);
+  border: 1px solid rgba(31, 157, 102, 0.35);
+}
+
+.finca-registration__map-hint {
+  background-color: #f4f6f8;
+  color: #475569;
+  border: 1px dashed #cbd5e1;
+}
+
+.finca-registration__summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 18px;
+}
+
+.finca-registration__summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(236, 241, 240, 0.8);
+}
+
+.finca-registration__summary-label {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+}
+
+.finca-registration__summary-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.finca-registration__lots-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.finca-registration__lots-preview-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.finca-registration__chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.finca-registration__chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(31, 157, 102, 0.12);
+  color: var(--finca-accent-strong);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.finca-registration__chip--muted {
+  background: rgba(100, 116, 139, 0.16);
+  color: #475569;
+}
+
+.finca-registration__lots-preview-empty {
+  font-size: 14px;
+  color: #475569;
+}
+
+.finca-registration__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.finca-registration__actions .button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.finca-registration__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 18px;
+}
+
+.finca-registration__aside-card {
+  background: #f8fbf9;
+  border-radius: 18px;
+  border: 1px solid #e2f1ea;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 12px 28px rgba(15, 90, 57, 0.08);
+}
+
+.finca-registration__aside-card--accent {
+  background: linear-gradient(180deg, rgba(31, 157, 102, 0.12) 0%, rgba(31, 157, 102, 0.08) 70%, #fdfefe 100%);
+  border-color: rgba(31, 157, 102, 0.4);
+}
+
+.finca-registration__aside-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.finca-registration__tip-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.finca-registration__tip-item {
+  display: flex;
+  gap: 12px;
+}
+
+.finca-registration__tip-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: rgba(31, 157, 102, 0.12);
+  color: var(--finca-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.finca-registration__tip-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.finca-registration__tip-description {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.45;
+}
+
+.finca-registration__aside-highlight {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.finca-registration__highlight-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--finca-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.finca-registration__highlight-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.finca-registration__highlight-subtitle {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #1f2937;
+  line-height: 1.45;
+}
+
+.finca-registration__highlight-coordinates {
+  display: flex;
+  gap: 18px;
+  margin-top: 12px;
+  font-weight: 600;
+  color: var(--finca-accent-strong);
+}
+
+.finca-registration__aside-footer {
+  margin: 0;
+  font-size: 13px;
+  color: #2f3f3a;
+  line-height: 1.5;
+}
+
+@media (max-width: 1180px) {
+  .finca-registration__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .finca-registration__aside {
+    position: static;
+  }
+}
+
 @media (max-width: 768px) {
-  .formGrid {
+  .finca-registration {
+    gap: 22px;
+  }
+
+  .finca-registration__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .finca-registration__back-button {
+    width: fit-content;
+  }
+
+  .finca-registration__progress {
+    grid-template-columns: 1fr;
+  }
+
+  .finca-registration__card {
+    padding: 20px;
+  }
+
+  .finca-registration__summary-grid {
     grid-template-columns: 1fr;
   }
 }
 
-.formDivider {
-  border: none;
-  border-top: 1px solid #eef0f2;
-  margin: 30px 0;
-}
-.submitButton {
-  grid-column: span 2;
-  justify-self: center;
-  padding: 12px 30px;
-  font-size: 16px;
-}
+@media (max-width: 520px) {
+  .finca-registration__actions {
+    justify-content: stretch;
+  }
 
-/* Estilo para el feedback del mapa */
-.location-feedback {
-  background-color: #e6fffb;
-  border: 1px solid #b3f0e6;
-  color: #005249;
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-top: 15px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.95rem;
+  .finca-registration__actions .button {
+    width: 100%;
+    justify-content: center;
+  }
 }

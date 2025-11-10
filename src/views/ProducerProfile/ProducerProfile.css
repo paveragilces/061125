@@ -1,185 +1,606 @@
 /* En: src/views/ProducerProfile/ProducerProfile.css */
 /* --- ARCHIVO COMPLETO CON DISEÑO CORREGIDO --- */
 
-.container {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
+.producer-profile {
+  --producer-accent: var(--sidebar-accent, #1f9d66);
+  --producer-accent-strong: var(--sidebar-accent-strong, #0f7a4f);
+  --producer-accent-soft: rgba(31, 157, 102, 0.12);
+  --producer-surface: #ffffff;
+  color: #1a202c;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 32px 36px;
+  background: linear-gradient(180deg, #f7fbf9 0%, #ffffff 32%);
+  border-radius: 28px;
+  box-shadow: 0 18px 40px rgba(16, 63, 48, 0.08);
 }
 
-.profileHeader {
+.producer-profile__hero {
   display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap; 
-  gap: 20px;
-  margin-bottom: 15px;
-}
-.profileHeader .h1 {
-  margin-bottom: 10px;
-  border: none;
-  padding: 0;
+  gap: 28px;
+  padding: 32px 36px;
+  background: linear-gradient(130deg, rgba(31, 157, 102, 0.16) 0%, rgba(15, 118, 110, 0.08) 68%, rgba(10, 37, 48, 0.08) 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(31, 157, 102, 0.22);
+  position: relative;
+  overflow: hidden;
 }
 
-/* --- NUEVO: Contenedor para el buscador --- */
-.filterContainer {
-  margin-bottom: 20px;
-  border-top: 1px solid #f0f0f0;
-  border-bottom: 1px solid #f0f0f0;
-  padding: 20px 0;
-}
-.filterContainer .formGroup {
-  margin-bottom: 0; /* Quita el espacio extra del Input */
+.producer-profile__hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.38), transparent 60%);
+  opacity: 0.8;
+  pointer-events: none;
 }
 
-.h2 {
-  font-size: 22px;
-  color: #222;
-  margin-bottom: 15px;
-  font-weight: 600;
+.producer-profile__hero-content,
+.producer-profile__hero-actions {
+  position: relative;
+  z-index: 1;
 }
 
-.h3 {
-  font-size: 18px;
-  color: #333;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-weight: 600;
-  border-top: 1px solid #f0f0f0;
-  padding-top: 15px;
-}
-
-.fincaCard {
-  background-color: #f7fcfb; 
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  padding: 25px;
-  margin-bottom: 20px;
-  cursor: default;
-  transition: all 0.2s ease-in-out;
-}
-
-.fincaCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07);
-  border-color: #4A90E2; 
-}
-
-
-.fincaHeader {
+.producer-profile__hero-content {
+  flex: 1 1 380px;
+  max-width: 620px;
   display: flex;
-  justify-content: space-between;
-  align-items: center; 
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-  margin-bottom: 15px;
-}
-.fincaHeader .h2 {
-  margin: 0;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.fincaCardActions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.fincaHectares {
-  font-size: 16px;
-  font-weight: 500;
-  color: #555;
-  white-space: nowrap; 
-}
-
-.button-small {
-  padding: 6px 12px;
+.producer-profile__breadcrumb {
   font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(26, 32, 44, 0.7);
 }
 
-.loteList {
-  list-style: none;
-  padding-left: 0;
+.producer-profile__title {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  color: #0f4333;
+}
+
+.producer-profile__description {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #374151;
+}
+
+.producer-profile__hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+}
+
+.producer-profile__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(31, 157, 102, 0.24);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #0f4333;
+  backdrop-filter: blur(4px);
+}
+
+.producer-profile__hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  align-items: center;
 }
-.loteItem {
-  background-color: #f4f4f4;
-  padding: 8px 12px;
-  border-radius: 8px;
+
+.producer-profile__metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.producer-profile__metric-card {
+  background-color: var(--producer-surface);
+  border-radius: 20px;
+  border: 1px solid rgba(15, 118, 110, 0.16);
+  padding: 22px 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  box-shadow: 0 14px 30px rgba(15, 70, 50, 0.08);
+}
+
+.producer-profile__metric-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(31, 157, 102, 0.14);
+  color: var(--producer-accent);
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-weight: 500;
-  color: #333;
+  justify-content: center;
 }
 
-.fincaDetails {
+.producer-profile__metric-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.producer-profile__metric-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #4a5568;
+}
+
+.producer-profile__metric-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f4333;
+}
+
+.producer-profile__metric-foot {
+  margin: 0;
+  font-size: 14px;
+  color: #5f6b7a;
+}
+
+.producer-profile__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2.15fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.producer-profile__main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.producer-profile__toolbar {
+  background: var(--producer-surface);
+  border-radius: 20px;
+  border: 1px solid rgba(15, 118, 110, 0.14);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 16px 28px rgba(15, 70, 50, 0.07);
+}
+
+.producer-profile__search {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(247, 251, 249, 0.8);
+  border: 1px solid rgba(15, 118, 110, 0.12);
+  border-radius: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.producer-profile__search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  color: #1a202c;
+  outline: none;
+}
+
+.producer-profile__search:focus-within {
+  border-color: var(--producer-accent);
+  box-shadow: 0 0 0 3px rgba(31, 157, 102, 0.15);
+}
+
+.producer-profile__clear {
+  border: none;
+  background: rgba(15, 118, 110, 0.12);
+  color: var(--producer-accent-strong);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.producer-profile__filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 20px;
-  margin-bottom: 15px;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.fincaDetails p {
-  margin: 0;
-  font-size: 15px;
-  color: #555;
+.producer-profile__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
-.fincaDetails p strong {
-  color: #111;
+
+.producer-profile__chip {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 118, 110, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a3c32;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.producer-profile__chip.is-active {
+  background: var(--producer-accent);
+  color: #ffffff;
+  border-color: var(--producer-accent);
+  box-shadow: 0 8px 18px rgba(31, 157, 102, 0.24);
+}
+
+.producer-profile__sort {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #4a5568;
   font-weight: 600;
 }
 
-.emptyStateCard {
-  background-color: #fdfdfd;
-  border: 2px dashed #e0e0e0;
-  border-radius: 12px;
-  padding: 40px 25px;
-  margin-bottom: 20px;
+.producer-profile__select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(247, 251, 249, 0.9);
+  border: 1px solid rgba(15, 118, 110, 0.16);
+  border-radius: 14px;
+  padding: 8px 14px;
+}
+
+.producer-profile__select-wrapper select {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a202c;
+  appearance: none;
+  padding-right: 8px;
+  cursor: pointer;
+}
+
+.producer-profile__select-wrapper select:focus {
+  outline: none;
+}
+
+.producer-profile__empty-state {
+  border-radius: 20px;
+  padding: 48px 32px;
   text-align: center;
-  color: #777;
+  background: #ffffff;
+  border: 2px dashed rgba(15, 118, 110, 0.2);
+  color: #374151;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
 }
-.emptyStateCard .h2 {
-  color: #555;
-  margin-top: 15px;
+
+.producer-profile__empty-state svg {
+  color: rgba(15, 118, 110, 0.45);
 }
-.emptyStateCard p {
-  font-size: 1.1rem;
+
+.producer-profile__empty-state h2 {
   margin: 0;
-}
-.emptyStateCard svg {
-  color: #ccc;
-}
-
-.fincaCard-large {
-  background-color: #ffffff; 
-  border-left: 5px solid #28a745; 
-  box-shadow: 0 8px 15px rgba(40, 167, 69, 0.1); 
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f4333;
 }
 
-/* --- ELIMINADO: .profileActionsContainer --- */
+.producer-profile__empty-state p {
+  margin: 0;
+  max-width: 440px;
+  line-height: 1.6;
+}
 
-/* Estilos para el mensaje "Sin resultados" */
-.noResultsCard {
-  background-color: #fffaf0; 
-  border: 2px solid #ffe5b3;
+.producer-profile__empty-state--muted {
+  background: #fff9ed;
+  border-color: rgba(245, 158, 11, 0.45);
+  color: #7b4d00;
+}
+
+.producer-profile__empty-state--muted svg {
+  color: #f59e0b;
+}
+
+.producer-profile__finca-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.producer-profile__finca-card {
+  background: #ffffff;
+  border-radius: 22px;
+  border: 1px solid rgba(15, 118, 110, 0.14);
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 12px 24px rgba(15, 63, 50, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.producer-profile__finca-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 32px rgba(15, 63, 50, 0.14);
+}
+
+.producer-profile__finca-card--highlight {
+  border-color: var(--producer-accent);
+  box-shadow: 0 22px 40px rgba(31, 157, 102, 0.2);
+}
+
+.producer-profile__finca-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.producer-profile__finca-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.producer-profile__finca-titles h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f4333;
+}
+
+.producer-profile__finca-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.producer-profile__finca-badge--high {
+  background: rgba(31, 157, 102, 0.18);
+  color: var(--producer-accent-strong);
+}
+
+.producer-profile__finca-badge--medium {
+  background: rgba(14, 116, 144, 0.14);
+  color: #0e7490;
+}
+
+.producer-profile__finca-badge--low {
+  background: rgba(245, 158, 11, 0.15);
+  color: #b45309;
+}
+
+.button-small {
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+.producer-profile__finca-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px 16px;
+}
+
+.producer-profile__finca-metrics strong {
+  font-size: 16px;
+  color: #1a202c;
+}
+
+.producer-profile__metric-tag {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.producer-profile__lotes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.producer-profile__lote-pill {
+  padding: 6px 12px;
   border-radius: 12px;
-  padding: 40px 25px;
-  margin-bottom: 20px;
-  text-align: center;
-  color: #7d6a00;
+  background: rgba(15, 118, 110, 0.1);
+  color: #0f4333;
+  font-size: 13px;
+  font-weight: 600;
 }
-.noResultsCard .h2 {
-  color: #594c00;
-  margin-top: 15px;
+
+.producer-profile__lote-pill--more {
+  background: rgba(26, 32, 44, 0.12);
+  color: #1a202c;
 }
-.noResultsCard p {
-  font-size: 1.1rem;
+
+.producer-profile__finca-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.producer-profile__footer-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.producer-profile__footer-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.producer-profile__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.producer-profile__aside-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(15, 118, 110, 0.12);
+  padding: 24px 26px;
+  box-shadow: 0 16px 28px rgba(15, 63, 50, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.producer-profile__aside-card h2,
+.producer-profile__aside-card h3 {
   margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f4333;
 }
-.noResultsCard svg {
-  color: #ffc107;
+
+.producer-profile__aside-card ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #4a5568;
+  line-height: 1.5;
+}
+
+.producer-profile__aside-card ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.producer-profile__aside-card--accent {
+  background: linear-gradient(180deg, rgba(31, 157, 102, 0.14) 0%, rgba(255, 255, 255, 0.9) 100%);
+  border-color: rgba(31, 157, 102, 0.3);
+}
+
+.producer-profile__tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #1a3c32;
+}
+
+.producer-profile__tip strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.producer-profile__tip p {
+  margin: 0;
+  font-size: 13px;
+  color: #44515f;
+  line-height: 1.5;
+}
+
+.producer-profile__aside-card--outline {
+  background: #f8fbf9;
+  border: 1px dashed rgba(15, 118, 110, 0.35);
+}
+
+.producer-profile__aside-card--outline ol {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #3f4a56;
+  line-height: 1.6;
+}
+
+@media (max-width: 1200px) {
+  .producer-profile {
+    padding: 24px;
+  }
+
+  .producer-profile__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .producer-profile {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .producer-profile__hero {
+    padding: 24px;
+  }
+
+  .producer-profile__title {
+    font-size: 30px;
+  }
+
+  .producer-profile__metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .producer-profile__toolbar {
+    padding: 18px;
+  }
+
+  .producer-profile__finca-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .producer-profile__hero-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .producer-profile__hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .producer-profile__filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .producer-profile__footer-actions {
+    flex-direction: column;
+  }
 }

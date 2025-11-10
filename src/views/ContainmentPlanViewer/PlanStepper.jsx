@@ -54,7 +54,6 @@ const PlanStepper = ({ plan, onOpenTaskDetails }) => {
           (firstIncompleteStepIndex === -1 && index === 0) || firstIncompleteStepIndex === index;
 
         const status = getStepStatus(step, isFirstIncomplete);
-        
 
         return (
           <Step
@@ -64,6 +63,8 @@ const PlanStepper = ({ plan, onOpenTaskDetails }) => {
             isOpen={openStepId === step.id}
             onToggle={() => handleToggleStep(step.id)}
             onOpenTaskDetails={onOpenTaskDetails}
+            index={index}
+            totalSteps={steps.length}
           />
         );
       })}

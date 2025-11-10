@@ -20,6 +20,15 @@ const TimelineCard = ({ task, onOpenTaskDetails }) => {
   const hasComment = Boolean(task.log && task.log.length);
   const hasEvidence = Boolean(task.evidencePhoto);
   const latestLog = task.log && task.log.length ? task.log[task.log.length - 1] : null;
+  const latestLogComment = latestLog?.comment?.trim();
+  const latestLogDate = latestLog?.date
+    ? new Date(latestLog.date).toLocaleString('es-ES', {
+        day: '2-digit',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    : null;
   const statusMeta = TASK_STATUS_META[task.status] || TASK_STATUS_META.pending;
 
   return (
@@ -50,10 +59,17 @@ const TimelineCard = ({ task, onOpenTaskDetails }) => {
 
       <p className="card-text">{task.text}</p>
 
+      {latestLogComment ? (
+        <p className="timeline-log-snippet">“{latestLogComment}”</p>
+      ) : (
+        <p className="timeline-log-snippet muted">Sin comentarios registrados aún.</p>
+      )}
+
       <div className="timeline-card-footer">
         {latestLog ? (
           <span className="timeline-note">
             Último registro por <strong>{latestLog.user}</strong>
+            {latestLogDate ? ` · ${latestLogDate}` : ''}
           </span>
         ) : (
           <span className="timeline-note muted">Sin actualizaciones registradas</span>

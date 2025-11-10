@@ -14,8 +14,10 @@ const defaultZoom = 13;
  * Usa react-leaflet para un mapa real con un pin central fijo.
  * El usuario mueve el mapa, no el pin.
  */
-const MapPinSelector = ({ onLocationSet }) => {
-  const [position, setPosition] = useState(defaultCenter);
+// 1. Añadido 'initialLocation' a las props
+const MapPinSelector = ({ onLocationSet, initialLocation }) => {
+  // 2. 'useState' ahora usa 'initialLocation' o el 'defaultCenter'
+  const [position, setPosition] = useState(initialLocation ? [initialLocation.lat, initialLocation.lon] : defaultCenter);
   const [locationFixed, setLocationFixed] = useState(false);
 
   // Callback para cuando el usuario SUELTA el mapa
@@ -58,9 +60,10 @@ const MapPinSelector = ({ onLocationSet }) => {
   return (
     <div className="mapPinContainer">
       {/* El mapa real */}
-      <MapContainer 
-        center={defaultCenter} 
-        zoom={defaultZoom} 
+      <MapContainer
+        // 3. Eliminado 'key={mapInstance}' que causaba el error
+        center={position}
+        zoom={defaultZoom}
         className="leaflet-container"
         // Leaflet no tiene un onDragEnd simple, usamos moveend
         onMoveEnd={onMoveEnd}
